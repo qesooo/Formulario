@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Formulario soporte")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+691b6a4d488acee7727292ccbabd2a266c9c4441")]
 [assembly: System.Reflection.AssemblyProductAttribute("Formulario soporte")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Formulario soporte")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
