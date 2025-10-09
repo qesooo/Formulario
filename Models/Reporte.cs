@@ -15,7 +15,9 @@ public partial class Reporte
 
     public DateOnly FechaReporte { get; set; }
 
-    public string TipoMantenimiento { get; set; } = null!;
+    public string? MantenimientoLogico { get; set; } = string.Empty;
+    public string? MantenimientoFisico { get; set; } = string.Empty;
+    public string? MantenimientoReemplazo { get; set; } = string.Empty;
 
     public string Descripcion { get; set; } = null!;
 
@@ -25,13 +27,13 @@ public partial class Reporte
 
     public int IdUsuarioResponsable { get; set; }
 
-    public virtual Equipo IdEquipoNavigation { get; set; } = null!;
+    public virtual Equipo? IdEquipoNavigation { get; set; }
 
-    public virtual Sucursal IdSucursalNavigation { get; set; } = null!;
+    public virtual Sucursal? IdSucursalNavigation { get; set; }
 
-    public virtual Usuario IdUsuarioResponsableNavigation { get; set; } = null!;
+    public virtual Usuario? IdUsuarioResponsableNavigation { get; set; }
 
-    public virtual Usuario IdUsuarioTecnicoNavigation { get; set; } = null!;
+    public virtual Usuario? IdUsuarioTecnicoNavigation { get; set; }
 
     public byte[]? Firma { get; set; }
 }

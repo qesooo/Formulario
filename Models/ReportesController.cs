@@ -46,6 +46,20 @@ namespace Formulario_soporte.Models
                 return NotFound();
             }
 
+            // * INICIO: LÓGICA PARA VISUALIZAR LA FIRMA *
+            if (reporte.Firma != null && reporte.Firma.Length > 0)
+            {
+                // Convertimos el byte[] a Base64 y le agregamos el prefijo para usarlo en la etiqueta <img>
+                string base64Image = Convert.ToBase64String(reporte.Firma);
+                ViewBag.FirmaSrc = $"data:image/png;base64,{base64Image}";
+            }
+            else
+            {
+                ViewBag.FirmaSrc = null;
+            }
+            // * FIN: LÓGICA PARA VISUALIZAR LA FIRMA *
+
+
             return View(reporte);
         }
 
@@ -53,10 +67,23 @@ namespace Formulario_soporte.Models
         [AuthFilter("Administrador", "Técnico")]
         public IActionResult Create()
         {
-            ViewData["IdEquipo"] = new SelectList(_context.Equipos, "IdEquipo", "IdEquipo");
-            ViewData["IdSucursal"] = new SelectList(_context.Sucursals, "IdSucursal", "IdSucursal");
-            ViewData["IdUsuarioResponsable"] = new SelectList(_context.Usuarios, "IdUsuario", "IdUsuario");
-            ViewData["IdUsuarioTecnico"] = new SelectList(_context.Usuarios, "IdUsuario", "IdUsuario");
+            ViewData["IdEquipo"] = new SelectList(_context.Equipos, "IdEquipo", "Activo");
+            ViewData["IdSucursal"] = new SelectList(
+                _context.Sucursals
+                    .Select(s => new
+                    {
+                        s.IdSucursal,
+                        NombreCompleto = s.Nombre + " - " + s.Empresa
+                    }),
+                "IdSucursal",
+                "NombreCompleto"
+            );
+            ViewData["IdUsuarioResponsable"] = new SelectList(_context.Usuarios, "IdUsuario", "Nombre");
+            ViewData["IdUsuarioTecnico"] = new SelectList(
+                _context.Usuarios.Where(u => u.Rol == "Técnico"), // 👈 solo técnicos
+                "IdUsuario",
+                "Nombre"
+            );
             return View();
         }
 
@@ -65,18 +92,56 @@ namespace Formulario_soporte.Models
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdReporte,IdUsuarioTecnico,IdEquipo,IdSucursal,FechaReporte,TipoMantenimiento,Descripcion,TrabajoRealizado,Estado,IdUsuarioResponsable")] Reporte reporte)
+        public async Task<IActionResult> Create([Bind("IdReporte,IdUsuarioTecnico,IdEquipo,IdSucursal,FechaReporte,MantenimientoLogico,MantenimientoFisico,MantenimientoReemplazo,Descripcion,TrabajoRealizado,Estado,IdUsuarioResponsable")] Reporte reporte,
+            string SignatureData) // recibe el hidden
         {
+            // Guardamos la versión completa (dataURL) por si hay que re-renderizar la vista
+            string signatureDataUrl = SignatureData;
+
+            // Procesamos la firma si vino
+            if (!string.IsNullOrEmpty(SignatureData))
+            {
+                const string base64Prefix = "data:image/png;base64,";
+                if (SignatureData.StartsWith(base64Prefix))
+                    SignatureData = SignatureData.Substring(base64Prefix.Length);
+
+                try
+                {
+                    reporte.Firma = Convert.FromBase64String(SignatureData);
+                }
+                catch (FormatException)
+                {
+                    ModelState.AddModelError("SignatureData", "El formato de la firma digital es inválido.");
+                }
+            }
+            else
+            {
+                // Si la firma es obligatoria:
+                ModelState.AddModelError("SignatureData", "La firma digital es requerida.");
+                // Si no es obligatoria, comentá o quitá la línea anterior.
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(reporte);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdEquipo"] = new SelectList(_context.Equipos, "IdEquipo", "IdEquipo", reporte.IdEquipo);
-            ViewData["IdSucursal"] = new SelectList(_context.Sucursals, "IdSucursal", "IdSucursal", reporte.IdSucursal);
-            ViewData["IdUsuarioResponsable"] = new SelectList(_context.Usuarios, "IdUsuario", "IdUsuario", reporte.IdUsuarioResponsable);
-            ViewData["IdUsuarioTecnico"] = new SelectList(_context.Usuarios, "IdUsuario", "IdUsuario", reporte.IdUsuarioTecnico);
+
+            // Si llegamos acá, ModelState inválido: volver a poblar los selectlists
+            ViewData["IdEquipo"] = new SelectList(_context.Equipos, "IdEquipo", "Activo", reporte.IdEquipo);
+            ViewData["IdSucursal"] = new SelectList(
+                _context.Sucursals.Select(s => new { s.IdSucursal, NombreCompleto = s.Nombre + " - " + s.Empresa }),
+                "IdSucursal",
+                "NombreCompleto",
+                reporte.IdSucursal
+            );
+            ViewData["IdUsuarioResponsable"] = new SelectList(_context.Usuarios, "IdUsuario", "Nombre", reporte.IdUsuarioResponsable);
+            ViewData["IdUsuarioTecnico"] = new SelectList(_context.Usuarios.Where(u => u.Rol == "Técnico"), "IdUsuario", "Nombre", reporte.IdUsuarioTecnico);
+
+            // Importante: pasamos el dataURL original de vuelta a la vista para que no se pierda
+            ViewData["SignatureData"] = signatureDataUrl;
+
             return View(reporte);
         }
 
@@ -94,10 +159,24 @@ namespace Formulario_soporte.Models
             {
                 return NotFound();
             }
-            ViewData["IdEquipo"] = new SelectList(_context.Equipos, "IdEquipo", "IdEquipo", reporte.IdEquipo);
-            ViewData["IdSucursal"] = new SelectList(_context.Sucursals, "IdSucursal", "IdSucursal", reporte.IdSucursal);
-            ViewData["IdUsuarioResponsable"] = new SelectList(_context.Usuarios, "IdUsuario", "IdUsuario", reporte.IdUsuarioResponsable);
-            ViewData["IdUsuarioTecnico"] = new SelectList(_context.Usuarios, "IdUsuario", "IdUsuario", reporte.IdUsuarioTecnico);
+            ViewData["IdEquipo"] = new SelectList(_context.Equipos, "IdEquipo", "Activo", reporte.IdEquipo);
+            ViewData["IdSucursal"] = new SelectList(
+                _context.Sucursals
+                    .Select(s => new
+                    {
+                        s.IdSucursal,
+                        NombreCompleto = s.Nombre + " - " + s.Empresa
+                    }),
+                "IdSucursal",
+                "NombreCompleto"
+            );
+            ViewData["IdUsuarioResponsable"] = new SelectList(_context.Usuarios, "IdUsuario", "Nombre", reporte.IdUsuarioResponsable);
+            ViewData["IdUsuarioTecnico"] = new SelectList(
+                _context.Usuarios.Where(u => u.Rol == "Técnico"),
+                "IdUsuario",
+                "Nombre",
+                reporte.IdUsuarioTecnico
+            );
             return View(reporte);
         }
 
@@ -106,23 +185,38 @@ namespace Formulario_soporte.Models
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdReporte,IdUsuarioTecnico,IdEquipo,IdSucursal,FechaReporte,TipoMantenimiento,Descripcion,TrabajoRealizado,Estado,IdUsuarioResponsable")] Reporte reporte)
+        public async Task<IActionResult> Edit(int id) // 👈 Solo necesitamos el 'id'
         {
-            if (id != reporte.IdReporte)
+            var reporteExistente = await _context.Reportes.FindAsync(id);
+
+            if (reporteExistente == null)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            // Usamos TryUpdateModelAsync para aplicar los valores del formulario
+            // directamente sobre el objeto que cargamos de la BD.
+            // Esto asegura que Entity Framework detecte los cambios.
+            // Se listan solo las propiedades que se permite modificar desde el formulario.
+            var isUpdateSuccessful = await TryUpdateModelAsync(
+                reporteExistente,
+                "", // Prefijo vacío, ya que los nombres de los campos del form coinciden con el modelo
+                r => r.IdUsuarioTecnico, r => r.IdEquipo, r => r.IdSucursal, r => r.FechaReporte,
+                r => r.MantenimientoLogico, r => r.MantenimientoFisico, r => r.MantenimientoReemplazo,
+                r => r.Descripcion, r => r.TrabajoRealizado, r => r.Estado, r => r.IdUsuarioResponsable
+            );
+
+            // Si la actualización fue exitosa y el modelo es válido...
+            if (isUpdateSuccessful && ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(reporte);
-                    await _context.SaveChangesAsync();
+                    await _context.SaveChangesAsync(); // Guardamos los cambios detectados
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ReporteExists(reporte.IdReporte))
+                    if (!_context.Reportes.Any(e => e.IdReporte == reporteExistente.IdReporte))
                     {
                         return NotFound();
                     }
@@ -131,14 +225,20 @@ namespace Formulario_soporte.Models
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
-            ViewData["IdEquipo"] = new SelectList(_context.Equipos, "IdEquipo", "IdEquipo", reporte.IdEquipo);
-            ViewData["IdSucursal"] = new SelectList(_context.Sucursals, "IdSucursal", "IdSucursal", reporte.IdSucursal);
-            ViewData["IdUsuarioResponsable"] = new SelectList(_context.Usuarios, "IdUsuario", "IdUsuario", reporte.IdUsuarioResponsable);
-            ViewData["IdUsuarioTecnico"] = new SelectList(_context.Usuarios, "IdUsuario", "IdUsuario", reporte.IdUsuarioTecnico);
-            return View(reporte);
+
+            // Si llegamos aquí es porque hubo un error de validación.
+            // Volvemos a poblar los SelectLists para mostrar el formulario de nuevo.
+            ViewData["IdEquipo"] = new SelectList(_context.Equipos, "IdEquipo", "Activo", reporteExistente.IdEquipo);
+            ViewData["IdSucursal"] = new SelectList(
+                _context.Sucursals.Select(s => new { s.IdSucursal, NombreCompleto = s.Nombre + " - " + s.Empresa }),
+                "IdSucursal", "NombreCompleto", reporteExistente.IdSucursal);
+            ViewData["IdUsuarioResponsable"] = new SelectList(_context.Usuarios, "IdUsuario", "Nombre", reporteExistente.IdUsuarioResponsable);
+            ViewData["IdUsuarioTecnico"] = new SelectList(_context.Usuarios.Where(u => u.Rol == "Técnico"), "IdUsuario", "Nombre", reporteExistente.IdUsuarioTecnico);
+
+            return View(reporteExistente);
         }
+
 
         // GET: Reportes/Delete/5
         [AuthFilter("Administrador", "Técnico")]

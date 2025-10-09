@@ -1,79 +1,121 @@
 ﻿@model Formulario_soporte.Models.Reporte
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar Reporte";
 }
 
-<h1>Edit</h1>
-
-<h4>Reporte</h4>
+<h1>Editar Reporte</h1>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
+    <div class="col-md-6">
+        <form asp-action="Edit" method="post">
+            @Html.AntiForgeryToken()
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="IdReporte" />
+
             <div class="form-group">
                 <label asp-for="IdUsuarioTecnico" class="control-label"></label>
                 <select asp-for="IdUsuarioTecnico" class="form-control" asp-items="ViewBag.IdUsuarioTecnico"></select>
                 <span asp-validation-for="IdUsuarioTecnico" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="IdEquipo" class="control-label"></label>
                 <select asp-for="IdEquipo" class="form-control" asp-items="ViewBag.IdEquipo"></select>
                 <span asp-validation-for="IdEquipo" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="IdSucursal" class="control-label"></label>
                 <select asp-for="IdSucursal" class="form-control" asp-items="ViewBag.IdSucursal"></select>
                 <span asp-validation-for="IdSucursal" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="FechaReporte" class="control-label"></label>
                 <input asp-for="FechaReporte" class="form-control" />
                 <span asp-validation-for="FechaReporte" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="TipoMantenimiento" class="control-label"></label>
-                <input asp-for="TipoMantenimiento" class="form-control" />
-                <span asp-validation-for="TipoMantenimiento" class="text-danger"></span>
+                <label asp-for="MantenimientoLogico" class="control-label"></label>
+                <select asp-for="MantenimientoLogico" class="form-control">
+                    <option value="">(Ninguno)</option>
+                    <option value="Defragmentar">Defragmentar</option>
+                    <option value="Windows configuracion">Windows configuración</option>
+                    <option value="Actualizacion drivers">Actualización de drivers</option>
+                </select>
+                <span asp-validation-for="MantenimientoLogico" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="MantenimientoFisico" class="control-label"></label>
+                <select asp-for="MantenimientoFisico" class="form-control">
+                    <option value="">(Ninguno)</option>
+                    <option value="Limpieza total">Limpieza total</option>
+                    <option value="Disco duro">Disco duro</option>
+                    <option value="Teclado">Teclado</option>
+                    <option value="Memoria">Memoria</option>
+                    <option value="Red">Red</option>
+                    <option value="Pantalla/Monitor">Pantalla/Monitor</option>
+                </select>
+                <span asp-validation-for="MantenimientoFisico" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="MantenimientoReemplazo" class="control-label"></label>
+                <select asp-for="MantenimientoReemplazo" class="form-control">
+                    <option value="">(Ninguno)</option>
+                    <option value="Disco duro">Disco duro</option>
+                    <option value="Teclado">Teclado</option>
+                    <option value="Memoria">Memoria</option>
+                    <option value="Red">Red</option>
+                    <option value="Pantalla/Monitor">Pantalla/Monitor</option>
+                </select>
+                <span asp-validation-for="MantenimientoReemplazo" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <label asp-for="Descripcion" class="control-label"></label>
                 <input asp-for="Descripcion" class="form-control" />
                 <span asp-validation-for="Descripcion" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="TrabajoRealizado" class="control-label"></label>
                 <input asp-for="TrabajoRealizado" class="form-control" />
                 <span asp-validation-for="TrabajoRealizado" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Estado" class="control-label"></label>
                 <input asp-for="Estado" class="form-control" />
                 <span asp-validation-for="Estado" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="IdUsuarioResponsable" class="control-label"></label>
                 <select asp-for="IdUsuarioResponsable" class="form-control" asp-items="ViewBag.IdUsuarioResponsable"></select>
                 <span asp-validation-for="IdUsuarioResponsable" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Firma" class="control-label"></label>
-                <input asp-for="Firma" class="form-control" />
-                <span asp-validation-for="Firma" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+
+            @* ✅ Mostrar firma actual si existe *@
+            @if (Model.Firma != null && Model.Firma.Length > 0)
+            {
+                string firmaBase64 = Convert.ToBase64String(Model.Firma);
+                <div class="form-group">
+                    <label>Firma actual guardada:</label><br />
+                    <img src="data:image/png;base64,@firmaBase64" alt="Firma guardada"
+                         style="max-width:300px; border:1px solid #ccc; border-radius:5px;" />
+                </div>
+            }
+
+
+            <div class="form-group mt-3">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Volver</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

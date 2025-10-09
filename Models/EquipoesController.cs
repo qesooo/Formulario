@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Formulario_soporte.Models
 {
@@ -50,7 +51,7 @@ namespace Formulario_soporte.Models
         [AuthFilter("Administrador")]
         public IActionResult Create()
         {
-            ViewData["IdUsuario"] = new SelectList(_context.Usuarios, "IdUsuario", "IdUsuario");
+            ViewData["IdUsuario"] = new SelectList(_context.Usuarios, "IdUsuario", "Nombre");
             return View();
         }
 
@@ -67,7 +68,7 @@ namespace Formulario_soporte.Models
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdUsuario"] = new SelectList(_context.Usuarios, "IdUsuario", "IdUsuario", equipo.IdUsuario);
+            ViewData["IdUsuario"] = new SelectList(_context.Usuarios, "IdUsuario", "Nombre", equipo.IdUsuario);
             return View(equipo);
         }
 
@@ -85,7 +86,7 @@ namespace Formulario_soporte.Models
             {
                 return NotFound();
             }
-            ViewData["IdUsuario"] = new SelectList(_context.Usuarios, "IdUsuario", "IdUsuario", equipo.IdUsuario);
+            ViewData["IdUsuario"] = new SelectList(_context.Usuarios, "IdUsuario", "Nombre", equipo.IdUsuario);
             return View(equipo);
         }
 
@@ -121,7 +122,7 @@ namespace Formulario_soporte.Models
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdUsuario"] = new SelectList(_context.Usuarios, "IdUsuario", "IdUsuario", equipo.IdUsuario);
+            ViewData["IdUsuario"] = new SelectList(_context.Usuarios, "IdUsuario", "Nombre", equipo.IdUsuario);
             return View(equipo);
         }
 

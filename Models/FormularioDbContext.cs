@@ -79,10 +79,18 @@ public partial class FormularioDbContext : DbContext
             entity.Property(e => e.IdSucursal).HasColumnName("id_sucursal");
             entity.Property(e => e.IdUsuarioResponsable).HasColumnName("id_usuario_responsable");
             entity.Property(e => e.IdUsuarioTecnico).HasColumnName("id_usuario_tecnico");
-            entity.Property(e => e.TipoMantenimiento)
+            entity.Property(e => e.MantenimientoLogico)
                 .HasMaxLength(20)
                 .IsUnicode(false)
-                .HasColumnName("tipo_mantenimiento");
+                .HasColumnName("mantenimiento_logico");
+            entity.Property(e => e.MantenimientoFisico)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("mantenimiento_fisico");
+            entity.Property(e => e.MantenimientoReemplazo)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("mantenimiento_reemplazo");
             entity.Property(e => e.TrabajoRealizado)
                 .HasColumnType("text")
                 .HasColumnName("trabajo_realizado");

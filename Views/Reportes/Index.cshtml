@@ -16,7 +16,13 @@
                 @Html.DisplayNameFor(model => model.FechaReporte)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TipoMantenimiento)
+                @Html.DisplayNameFor(model => model.MantenimientoLogico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MantenimientoFisico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MantenimientoReemplazo)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Descripcion)
@@ -52,8 +58,14 @@
                 @Html.DisplayFor(modelItem => item.FechaReporte)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TipoMantenimiento)
+                @Html.DisplayFor(modelItem => item.MantenimientoLogico)
             </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.MantenimientoFisico)
+             </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.MantenimientoReemplazo)
+             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Descripcion)
             </td>
@@ -64,19 +76,28 @@
                 @Html.DisplayFor(modelItem => item.Estado)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdEquipoNavigation.IdEquipo)
+                @Html.DisplayFor(modelItem => item.IdEquipoNavigation.Activo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdSucursalNavigation.IdSucursal)
+                @Html.DisplayFor(modelItem => item.IdSucursalNavigation.Nombre)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdUsuarioResponsableNavigation.IdUsuario)
+                @Html.DisplayFor(modelItem => item.IdUsuarioResponsableNavigation.Nombre)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdUsuarioTecnicoNavigation.IdUsuario)
+                @Html.DisplayFor(modelItem => item.IdUsuarioTecnicoNavigation.Nombre)
             </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Firma)
+                    @if (item.Firma != null && item.Firma.Length > 0)
+                    {
+                        string imageBase64 = Convert.ToBase64String(item.Firma);
+                        string imageSrc = $"data:image/png;base64,{imageBase64}";
+                        <img src="@imageSrc" alt="Firma" style="max-width:120px; border:1px solid #ccc; border-radius:5px;" />
+                    }
+                    else
+                    {
+                        <span class="text-muted">Sin firma</span>
+                    }
                 </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdReporte">Edit</a> |
