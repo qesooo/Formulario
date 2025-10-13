@@ -1,0 +1,173 @@
+﻿@model Formulario_soporte.Models.Reporte
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Reporte</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IdUsuarioTecnico" class="control-label"></label>
+                <select asp-for="IdUsuarioTecnico" class ="form-control" asp-items="ViewBag.IdUsuarioTecnico"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdEquipo" class="control-label"></label>
+                <select asp-for="IdEquipo" class ="form-control" asp-items="ViewBag.IdEquipo"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdSucursal" class="control-label"></label>
+                <select asp-for="IdSucursal" class ="form-control" asp-items="ViewBag.IdSucursal"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaReporte" class="control-label"></label>
+                <input asp-for="FechaReporte" class="form-control" />
+                <span asp-validation-for="FechaReporte" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MantenimientoLogico" class="control-label"></label>
+                <select asp-for="MantenimientoLogico" class="form-control">
+                    <option value="">(Ninguno)</option>
+                    <option value="Defragmentar">Defragmentar</option>
+                    <option value="Windows configuracion">Windows configuración</option>
+                    <option value="Actualizacion drivers">Actualización de drivers</option>
+                </select>
+                <span asp-validation-for="MantenimientoLogico" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="MantenimientoFisico" class="control-label"></label>
+                <select asp-for="MantenimientoFisico" class="form-control">
+                    <option value="">(Ninguno)</option>
+                    <option value="Limpieza total">Limpieza total</option>
+                    <option value="Disco duro">Disco duro</option>
+                    <option value="Teclado">Teclado</option>
+                    <option value="Memoria">Memoria</option>
+                    <option value="Red">Red</option>
+                    <option value="Pantalla/Monitor">Pantalla/Monitor</option>
+                </select>
+                <span asp-validation-for="MantenimientoFisico" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="MantenimientoReemplazo" class="control-label"></label>
+                <select asp-for="MantenimientoReemplazo" class="form-control">
+                    <option value="">(Ninguno)</option>
+                    <option value="Disco duro">Disco duro</option>
+                    <option value="Teclado">Teclado</option>
+                    <option value="Memoria">Memoria</option>
+                    <option value="Red">Red</option>
+                    <option value="Pantalla/Monitor">Pantalla/Monitor</option>
+                </select>
+                <span asp-validation-for="MantenimientoReemplazo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descripcion" class="control-label"></label>
+                <input asp-for="Descripcion" class="form-control" />
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TrabajoRealizado" class="control-label"></label>
+                <input asp-for="TrabajoRealizado" class="form-control" />
+                <span asp-validation-for="TrabajoRealizado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Estado" class="control-label"></label>
+                <input asp-for="Estado" class="form-control" />
+                <span asp-validation-for="Estado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdUsuarioResponsable" class="control-label"></label>
+                <select asp-for="IdUsuarioResponsable" class ="form-control" asp-items="ViewBag.IdUsuarioResponsable"></select>
+            </div>
+
+
+
+            @* INICIO DEL CÓDIGO DE FIRMA DIGITAL (Signature Pad) *@
+            <div class="form-group">
+                <label class="control-label">Firma Digital del Responsable</label>
+                @* Contenedor del Canvas *@
+                <div class="signature-container" style="border: 1px solid #ccc; max-width: 400px; height: 200px;">
+                    <canvas id="signature-canvas" style="width: 100%; height: 100%;"></canvas>
+                </div>
+                <br>
+                <button type="button" id="clear-signature" class="btn btn-sm btn-secondary">Borrar Firma</button>
+
+                @* Campo oculto CRUCIAL para enviar la firma al controlador *@
+                <input type="hidden" id="SignatureData" name="SignatureData" value="" />
+
+                @* El span de validación se aplica al nuevo campo oculto *@
+                <span id="SignatureDataValidation" class="text-danger"></span>
+            </div>
+            @* FIN DEL CÓDIGO DE FIRMA DIGITAL *@
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    @* 1. Incluir la librería Signature Pad (CDN) *@
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const canvas = document.getElementById('signature-canvas');
+            const signatureDataInput = document.getElementById('SignatureData');
+            const validationSpan = document.getElementById('SignatureDataValidation');
+            const signaturePad = new SignaturePad(canvas);
+
+            // Función para ajustar el tamaño del Canvas para que la firma no se distorsione
+            function resizeCanvas() {
+                const ratio = Math.max(window.devicePixelRatio || 1, 1);
+                canvas.width = canvas.offsetWidth * ratio;
+                canvas.height = canvas.offsetHeight * ratio;
+                canvas.getContext("2d").scale(ratio, ratio);
+                signaturePad.clear(); // Limpiar después de redimensionar
+            }
+            // Llamar al inicio y al redimensionar la ventana
+            window.onresize = resizeCanvas;
+            resizeCanvas();
+
+            // Manejar el botón de Borrar
+            document.getElementById('clear-signature').addEventListener('click', function () {
+                signaturePad.clear();
+                validationSpan.textContent = ''; // Limpiar mensaje de error si existe
+            });
+
+            // Manejar el envío del formulario (antes de que se haga el POST)
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function (event) {
+
+                // VALIDACIÓN: Asegurarse de que el usuario firmó
+                if (signaturePad.isEmpty()) {
+                    validationSpan.textContent = "La firma digital es requerida.";
+                    alert("Por favor, dibuje su firma antes de enviar.");
+                    event.preventDefault(); // Detener el envío del formulario
+                } else {
+                    // CONVERSIÓN: Si está firmada, convertir la firma a imagen Base64
+                    // toDataURL() devuelve la cadena de la imagen PNG en Base64
+                    const dataURL = signaturePad.toDataURL('image/png');
+                    signatureDataInput.value = dataURL;
+                    validationSpan.textContent = ''; // Limpiar validación
+                }
+            });
+        });
+    </script>
+}
