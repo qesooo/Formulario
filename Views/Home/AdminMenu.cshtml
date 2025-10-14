@@ -1,0 +1,172 @@
+﻿@{
+    // ELIMINAR O COMENTAR: Layout = null;
+    ViewData["Title"] = "Panel Admin";
+}
+
+<style>
+    /* ... (Estilos import de Poppins y reset * se mantienen) ... */
+
+    /* CORRECCIÓN PRINCIPAL: Aplicar el fondo pastel a todo el BODY */
+    body {
+        /* FONDOS APLICADO AQUÍ */
+        background-color: #fcf8f3;
+        font-family: 'Poppins', sans-serif;
+        color: #333;
+        min-height: 100vh;
+        /* Asegúrate de que no haya flex/grid innecesario en body si el Layout lo maneja */
+        /* Si el Layout ya contiene el navbar, no uses flex/align-items en body,
+               ya que puede afectar cómo el navbar se posiciona. */
+    }
+
+    /* Etiqueta main que envuelve tu contenido de la vista (si usas un Layout) */
+    main {
+        /* MUY IMPORTANTE: Asegurarnos de que MAIN no tenga fondo blanco */
+        background-color: transparent; /* O simplemente NO definir un fondo */
+        /* Estos estilos se mueven del body a admin-dashboard o se ajustan */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 50px; /* Espacio superior para separar del navbar */
+    }
+
+    /* Contenedor principal que centra el contenido */
+    .admin-dashboard {
+        width: 100%;
+        max-width: 800px;
+        padding: 20px;
+        text-align: center;
+        /* Ya no necesita margin-top porque el padding del 'main' lo maneja */
+    }
+
+    /* ... (El resto del CSS se mantiene igual, ya que solo afectan los botones y títulos) ... */
+
+    /* 2. Estilos de Bienvenida */
+    .welcome-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    .welcome-subtitle {
+        font-size: 1rem;
+        font-weight: 400;
+        color: #666;
+        margin-bottom: 30px;
+    }
+
+    /* 3. Estilos del Menú (Contenedor de Botones) */
+    .menu-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 0;
+        list-style: none;
+        align-items: center;
+    }
+
+    /* 4. Estilos de Botones */
+    .menu-item a {
+        display: block;
+        padding: 15px 25px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-size: 1.1rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 350px;
+    }
+
+    /* Botones de Gestión (Azul) */
+    .menu-item:not(:last-child) a {
+        background-color: #4a90e2;
+        color: white;
+    }
+
+        .menu-item:not(:last-child) a:hover {
+            background-color: #357bd1;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+    /* Botón de Cerrar Sesión (Rojo/Melocotón Suave) */
+    .menu-item:last-child a {
+        background-color: #ff9999;
+        color: white;
+        border: 1px solid #ff7f7f;
+    }
+
+        .menu-item:last-child a:hover {
+            background-color: #ff7f7f;
+            color: white;
+            box-shadow: 0 6px 15px rgba(255, 127, 127, 0.5);
+            transform: translateY(-2px);
+        }
+
+
+    /* 5. Media Query (Desktop) - Se mantiene la estructura más flexible (2 o 3 columnas) */
+    @@media (min-width: 600px) {
+        .welcome-title
+
+    {
+        font-size: 2.5rem;
+    }
+
+    .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+        margin-top: 40px;
+    }
+
+    .menu-item a {
+        max-width: 100%;
+        width: 100%;
+        text-align: center;
+    }
+
+    .menu-item:last-child {
+        grid-column: 1 / -1;
+        max-width: 350px;
+        margin: 20px auto 0 auto;
+    }
+
+    }
+    /* Ajuste para 3 columnas en pantallas grandes */
+    @@media (min-width: 1000px) {
+        .menu-grid
+
+    {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .menu-item:nth-child(4) {
+        grid-column: 1 / 2;
+    }
+
+    .menu-item:last-child {
+        grid-column: 2 / 3;
+        max-width: 250px;
+        margin: 20px auto 0 auto;
+    }
+
+    }
+</style>
+
+
+<div class="admin-dashboard">
+
+    <h2 class="welcome-title">Bienvenido, @ViewBag.Nombre</h2>
+    <p class="welcome-subtitle">(Administrador)</p>
+
+    <ul class="menu-grid">
+        <li class="menu-item"><a href="/Usuarios">Gestión de usuarios</a></li>
+        <li class="menu-item"><a href="/Reportes">Gestión de Reportes</a></li>
+        <li class="menu-item"><a href="/Sucursals">Gestión de Sucursales</a></li>
+        <li class="menu-item"><a href="/Equipoes">Gestión de Equipos</a></li>
+        <li class="menu-item"><a href="/Login/Logout">Cerrar sesión</a></li>
+    </ul>
+
+</div>

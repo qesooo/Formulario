@@ -1,0 +1,384 @@
+﻿@model Formulario_soporte.Models.Reporte
+
+@{
+    ViewData["Title"] = "Registrar nuevo Reporte";
+    // Definición de colores
+    var pastelYellow = "#fcf8f3";
+    var headerBlue = "#4a90e2";
+    var buttonYellow = "#f7b731";
+}
+
+<style>
+    /* ... (ESTILOS CSS SE MANTIENEN IGUAL) ... */
+    /* 1. Estilos Globales y Fondo */
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Fondo principal: Amarillo pastel */
+    body {
+        background-color: @pastelYellow;
+        font-family: 'Poppins', sans-serif;
+        min-height: 100vh;
+        padding-top: 20px;
+    }
+
+    /* Navbar: Asegurar que la barra de navegación también sea amarillo pastel */
+    .navbar, .header, .navbar-nav, .container-fluid, .navbar-expand-sm, .navbar-light {
+        background-color: @pastelYellow !important;
+        border-bottom: none !important;
+        box-shadow: none !important;
+    }
+
+    /* 2. Contenedor Principal (La tarjeta blanca) */
+    .form-container {
+        width: 100%;
+        /* AUMENTO DEL ANCHO MÁXIMO AQUÍ */
+        max-width: 700px;
+        background-color: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        margin: 80px auto 40px auto;
+    }
+
+    /* 3. Títulos */
+    h1 {
+        display: none;
+    }
+
+    .styled-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 5px;
+        text-align: center;
+    }
+
+    .form-subtitle {
+        font-size: 1rem;
+        font-weight: 400;
+        color: #666;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    hr {
+        display: none;
+    }
+
+    /* 4. Grupos de Formulario y Etiquetas */
+    .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    .control-label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+        color: #444;
+        font-size: 0.95rem;
+    }
+
+    /* 5. Campos de Entrada (Input/Select) */
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+        .form-control:focus {
+            border-color: @headerBlue;
+            outline: none;
+            box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
+        }
+
+    /* Estilos para el contenedor de la firma */
+    .signature-container {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        max-width: 100%;
+        height: 200px;
+        overflow: hidden;
+        margin-top: 5px;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 6. Botones (Crear y Volver) */
+    .button-group {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .back-to-list-container {
+        margin-top: 15px;
+    }
+
+
+    .btn {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s, box-shadow 0.3s;
+        text-decoration: none;
+        text-align: center;
+    }
+
+    /* Botón Crear (Azul) */
+    .btn-primary-custom {
+        background-color: @headerBlue;
+        color: white;
+    }
+
+        .btn-primary-custom:hover {
+            background-color: #357bd1;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+    /* Botón Borrar Firma / Volver a la lista (Gris/Amarillo) */
+    .btn-secondary-custom {
+        background-color: @buttonYellow;
+        color: #333;
+    }
+
+        .btn-secondary-custom:hover {
+            background-color: #e5a428;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+    /* ************************************************* */
+    /* CORRECCIÓN: Eliminamos la restricción de ancho de Bootstrap */
+    /* Esto asegura que el formulario ocupe todo el .form-container de 700px */
+    .row, .col-md-4 {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+    }
+    /* ************************************************* */
+
+    .text-danger {
+        font-size: 0.85rem;
+        margin-top: 5px;
+    }
+</style>
+
+<div class="form-container">
+
+    <h2 class="styled-title">Registrar nuevo Reporte</h2>
+    <p class="form-subtitle">Completa los campos para documentar la incidencia.</p>
+
+    <div class="row">
+        <div class="col-md-4">
+            @* La etiqueta <form> empieza aquí *@
+            <form asp-action="Create" method="post">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label for="IdUsuarioTecnico" class="control-label">Técnico a cargo</label>
+                    <select asp-for="IdUsuarioTecnico" class="form-control" asp-items="ViewBag.IdUsuarioTecnico"></select>
+                </div>
+                <div class="form-group">
+                    <label for="IdEquipo" class="control-label">Equipo</label>
+                    <select asp-for="IdEquipo" class="form-control" asp-items="ViewBag.IdEquipo"></select>
+                </div>
+                <div class="form-group">
+                    <label for="IdSucursal" class="control-label">Empresa</label>
+                    <select asp-for="IdSucursal" class="form-control" asp-items="ViewBag.IdSucursal"></select>
+                </div>
+
+                <div class="form-group">
+                    <label for="FechaReporte" class="control-label">Fecha de Reporte</label>
+                    <input asp-for="FechaReporte" type="date" class="form-control" />
+                    <span asp-validation-for="FechaReporte" class="text-danger"></span>
+                </div>
+
+                <hr />
+
+                <div class="form-group">
+                    <label class="control-label">Mantenimiento Lógico</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" asp-for="Defragmentar">
+                        <label class="form-check-label" asp-for="Defragmentar">Defragmentar</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" asp-for="WindowsConfiguracion">
+                        <label class="form-check-label" asp-for="WindowsConfiguracion">Windows configuración</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" asp-for="ActualizacionDrivers">
+                        <label class="form-check-label" asp-for="ActualizacionDrivers">Actualización de drivers</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Mantenimiento Físico</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" asp-for="LimpiezaTotal">
+                        <label class="form-check-label" asp-for="LimpiezaTotal">Limpieza total</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" asp-for="DiscoDuroFisico">
+                        <label class="form-check-label" asp-for="DiscoDuroFisico">Disco duro</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" asp-for="TecladoFisico">
+                        <label class="form-check-label" asp-for="TecladoFisico">Teclado</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" asp-for="MemoriaFisico">
+                        <label class="form-check-label" asp-for="MemoriaFisico">Memoria</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" asp-for="RedFisico">
+                        <label class="form-check-label" asp-for="RedFisico">Red</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" asp-for="PantallaMonitorFisico">
+                        <label class="form-check-label" asp-for="PantallaMonitorFisico">Pantalla/Monitor</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Mantenimiento Reemplazo</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" asp-for="DiscoDuroReemplazo">
+                        <label class="form-check-label" asp-for="DiscoDuroReemplazo">Disco duro</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" asp-for="TecladoReemplazo">
+                        <label class="form-check-label" asp-for="TecladoReemplazo">Teclado</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" asp-for="MemoriaReemplazo">
+                        <label class="form-check-label" asp-for="MemoriaReemplazo">Memoria</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" asp-for="RedReemplazo">
+                        <label class="form-check-label" asp-for="RedReemplazo">Red</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" asp-for="PantallaMonitorReemplazo">
+                        <label class="form-check-label" asp-for="PantallaMonitorReemplazo">Pantalla/Monitor</label>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="form-group">
+                    <label asp-for="Descripcion" class="control-label"></label>
+                    <textarea asp-for="Descripcion" class="form-control"></textarea>
+                    <span asp-validation-for="Descripcion" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="TrabajoRealizado" class="control-label">Trabajo Realizado</label>
+                    <textarea asp-for="TrabajoRealizado" class="form-control"></textarea>
+                    <span asp-validation-for="TrabajoRealizado" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Estado" class="control-label"></label>
+                    <input asp-for="Estado" class="form-control" />
+                    <span asp-validation-for="Estado" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="IdUsuarioResponsable" class="control-label">Responsable (Solicitante)</label>
+                    <select asp-for="IdUsuarioResponsable" class="form-control" asp-items="ViewBag.IdUsuarioResponsable"></select>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Firma Digital del Responsable</label>
+                    <div class="signature-container">
+                        <canvas id="signature-canvas" style="width: 100%; height: 100%; border: 1px solid #ccc;"></canvas>
+                    </div>
+                    <button type="button" id="clear-signature" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Borrar Firma</button>
+
+                    <input type="hidden" id="SignatureData" name="SignatureData" />
+                    <span id="SignatureDataValidation" class="text-danger">@Html.ValidationMessage("SignatureData")</span>
+                </div>
+
+                <div class="button-group">
+                    <input type="submit" value="Crear" class="btn btn-primary-custom" />
+                </div>
+            </form>
+            @* La etiqueta </form> termina aquí *@
+        </div>
+    </div>
+
+    <div class="back-to-list-container">
+        <a asp-action="Index" class="btn btn-secondary-custom">Volver a la lista</a>
+    </div>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    @* 1. Incluir la librería Signature Pad (CDN) *@
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const canvas = document.getElementById('signature-canvas');
+            const signatureDataInput = document.getElementById('SignatureData');
+            const validationSpan = document.getElementById('SignatureDataValidation');
+
+            // Inicializar SignaturePad con el canvas
+            const signaturePad = new SignaturePad(canvas);
+
+            // Función para ajustar el tamaño del Canvas para que la firma no se distorsione
+            function resizeCanvas() {
+                const ratio = Math.max(window.devicePixelRatio || 1, 1);
+                canvas.width = canvas.offsetWidth * ratio;
+                canvas.height = canvas.offsetHeight * ratio;
+                canvas.getContext("2d").scale(ratio, ratio);
+                signaturePad.clear(); // Limpiar después de redimensionar
+            }
+
+            window.onresize = resizeCanvas;
+            resizeCanvas();
+
+            // Manejar el botón de Borrar
+            document.getElementById('clear-signature').addEventListener('click', function () {
+                signaturePad.clear();
+                validationSpan.textContent = '';
+                signatureDataInput.value = ''; // Asegurar que el campo oculto también se vacía
+            });
+
+            // Manejar el envío del formulario (antes de que se haga el POST)
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function (event) {
+                // VALIDACIÓN: Asegurarse de que el usuario firmó
+                if (signaturePad.isEmpty()) {
+                    validationSpan.textContent = "La firma digital es requerida.";
+                    alert("Por favor, dibuje su firma antes de enviar.");
+                    event.preventDefault(); // Detener el envío
+                } else {
+                    // CONVERSIÓN: Convertir la firma a imagen Base64 (data URL)
+                    const dataURL = signaturePad.toDataURL('image/png');
+                    signatureDataInput.value = dataURL;
+                    validationSpan.textContent = '';
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,189 @@
+﻿@model Formulario_soporte.Models.Sucursal
+
+@{
+    ViewData["Title"] = "Editar Sucursal";
+    // Definición de colores
+    var pastelYellow = "#fcf8f3"; // Usando un pastel más general que #FFF9C4 para consistencia con ejemplos previos
+    var headerBlue = "#4a90e2";
+    var buttonYellow = "#f7b731";
+}
+
+<style>
+    /* 1. Estilos Globales y Fondo */
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Fondo principal: Amarillo pastel y Tipografía */
+    body {
+        background-color: @pastelYellow;
+        font-family: 'Poppins', sans-serif;
+        min-height: 100vh;
+        padding-top: 20px;
+    }
+
+    /* Navbar: Asegurar que la barra de navegación también sea amarillo pastel */
+    .navbar, .header, .navbar-nav, .container-fluid, .navbar-expand-sm, .navbar-light {
+        background-color: @pastelYellow !important;
+        border-bottom: none !important;
+        box-shadow: none !important;
+    }
+
+    /* 2. Contenedor Principal (La tarjeta blanca) */
+    .form-container {
+        width: 100%;
+        max-width: 500px; /* Ancho más pequeño para un formulario simple */
+        background-color: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        margin: 80px auto 40px auto; /* Centrado vertical y horizontal */
+    }
+
+    /* 3. Títulos */
+    h1 {
+        display: none; /* Ocultar el h1 predeterminado */
+    }
+
+    h4 {
+        display: none; /* Ocultar el h4 predeterminado (Sucursal) */
+    }
+
+    .styled-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    hr {
+        display: none;
+    }
+
+    /* 4. Grupos de Formulario y Etiquetas */
+    .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    .control-label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+        color: #444;
+        font-size: 0.95rem;
+    }
+
+    /* 5. Campos de Entrada (Input) */
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+        .form-control:focus {
+            border-color: @headerBlue;
+            outline: none;
+            box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
+        }
+
+    /* 6. Botones (Guardar y Volver) */
+    .button-group {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .btn-custom {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s, box-shadow 0.3s;
+        text-decoration: none;
+        text-align: center;
+        display: block;
+    }
+
+    /* Botón Guardar (Azul) */
+    .btn-primary-custom {
+        background-color: @headerBlue;
+        color: white;
+    }
+
+        .btn-primary-custom:hover {
+            background-color: #357bd1;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+    /* Botón Volver a la lista (Amarillo) */
+    .btn-secondary-custom {
+        background-color: @buttonYellow;
+        color: #333;
+    }
+
+        .btn-secondary-custom:hover {
+            background-color: #e5a428;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+    /* Corrección de la estructura Bootstrap original */
+    .row, .col-md-4, .col-md-6 {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+    }
+</style>
+
+<div class="form-container">
+
+    <h2 class="styled-title">Editar Sucursal</h2>
+
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="IdSucursal" />
+
+                <div class="form-group">
+                    <label asp-for="Nombre" class="control-label"></label>
+                    <input asp-for="Nombre" class="form-control" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Empresa" class="control-label"></label>
+                    <input asp-for="Empresa" class="form-control" />
+                    <span asp-validation-for="Empresa" class="text-danger"></span>
+                </div>
+
+                <div class="button-group">
+                    <input type="submit" value="Guardar" class="btn-custom btn-primary-custom" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="button-group" style="margin-top: 15px;">
+        <a asp-action="Index" class="btn-custom btn-secondary-custom">Volver a la lista</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

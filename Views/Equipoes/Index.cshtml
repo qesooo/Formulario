@@ -1,0 +1,288 @@
+﻿@model IEnumerable<Formulario_soporte.Models.Equipo>
+
+@{
+    ViewData["Title"] = "Gestión de Equipos";
+    // Definición de colores
+    var pastelYellow = "#fcf8f3";
+    var headerBlue = "#4a90e2";
+}
+
+<style>
+    /* 1. Estilos Globales y Fondo */
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        /* Fondo amarillo pastel y fuente */
+        background-color: @pastelYellow;
+        font-family: 'Poppins', sans-serif;
+        color: #333;
+    }
+
+    /* Navbar: Asegurar que la barra de navegación también sea amarillo pastel */
+    .navbar, .header, .navbar-nav, .container-fluid, .navbar-expand-sm, .navbar-light {
+        background-color: @pastelYellow !important;
+        border-bottom: none !important;
+        box-shadow: none !important;
+    }
+
+    /* Título principal */
+    h1 {
+        display: none; /* Ocultamos el H1 original */
+    }
+
+    .styled-title {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #333;
+    }
+
+    /* Contenedor principal para centrar la tabla y el botón */
+    .table-container {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    /* 2. Estilo del Botón "Registrar equipos" */
+    .create-button-container {
+        display: flex;
+        justify-content: flex-start;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .create-button {
+        display: inline-block;
+        background-color: @headerBlue; /* Azul claro como el botón de registro de usuarios */
+        color: white;
+        padding: 10px 15px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: 600;
+        transition: background-color 0.3s, box-shadow 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+        .create-button:hover {
+            background-color: #357bd1;
+        }
+
+    /* 3. Estilo de la Tabla */
+    .styled-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 40px;
+    }
+
+        /* 4. Estilo del Encabezado (Azul Oscuro, Texto Blanco) */
+        .styled-table thead th {
+            background-color: @headerBlue;
+            color: white;
+            text-align: left;
+            padding: 15px 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: none;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        /* 5. Estilo de las Filas del Cuerpo - Alternancia de Colores */
+        .styled-table tbody td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            color: #444;
+            font-size: 0.85rem;
+            vertical-align: middle;
+        }
+
+        /* Fila Impar: Amarillo Pastel */
+        .styled-table tbody tr:nth-of-type(odd) td {
+            background-color: @pastelYellow;
+        }
+
+        /* Fila Par: Blanco */
+        .styled-table tbody tr:nth-of-type(even) td {
+            background-color: white;
+        }
+
+        /* Hover */
+        .styled-table tbody tr:hover td {
+            background-color: #f0f8ff;
+        }
+
+        /* Quitar el borde inferior de la última fila */
+        .styled-table tbody tr:last-of-type td {
+            border-bottom: none;
+        }
+
+    /* 6. Estilo de los Botones de Acción */
+    .action-group {
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end;
+    }
+
+    .action-button {
+        padding: 6px 10px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: white !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    /* Colores */
+    .edit-button {
+        background-color: #38bdf8;
+    }
+    /* Azul Claro */
+    .details-button {
+        background-color: #4ade80;
+    }
+    /* Verde Claro */
+    .delete-button {
+        background-color: #f87171;
+    }
+    /* Rojo Claro */
+
+    /* 7. Mobile-First (Responsividad) */
+    @@media (max-width: 768px) {
+        .styled-table {
+            border: 0;
+            box-shadow: none;
+        }
+
+            .styled-table thead {
+                display: none;
+            }
+
+            .styled-table tr {
+                display: block;
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                background-color: white;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            }
+
+            .styled-table td {
+                display: block;
+                text-align: right;
+                padding-left: 55% !important;
+                position: relative;
+                border-bottom: 1px solid #eee !important;
+                background-color: transparent !important;
+            }
+
+                .styled-table td:before {
+                    content: attr(data-label);
+                    position: absolute;
+                    left: 10px;
+                    width: 50%;
+                    padding-right: 10px;
+                    white-space: nowrap;
+                    font-weight: 600;
+                    text-align: left;
+                    color: #666;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+            .styled-table tbody tr td:last-child {
+                text-align: center;
+                border-bottom: none !important;
+                padding: 10px;
+            }
+
+        .action-group {
+            justify-content: center;
+        }
+    }
+
+</style>
+
+<div class="table-container">
+
+    <h2 class="styled-title">Gestión de equipos</h2>
+
+    <div class="create-button-container">
+        <p>
+            <a asp-action="Create" class="create-button">Registrar equipos</a>
+        </p>
+    </div>
+
+    <div class="table-responsive">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Tipo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Marca)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Modelo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Activo)
+                    </th>
+                    <th>
+                        Usuario
+                    </th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int rowCount = 0;
+                }
+                @foreach (var item in Model)
+                {
+
+                    <tr>
+                        <td data-label="@Html.DisplayNameFor(model => model.Tipo)">
+                            @Html.DisplayFor(modelItem => item.Tipo)
+                        </td>
+                        <td data-label="@Html.DisplayNameFor(model => model.Marca)">
+                            @Html.DisplayFor(modelItem => item.Marca)
+                        </td>
+                        <td data-label="@Html.DisplayNameFor(model => model.Modelo)">
+                            @Html.DisplayFor(modelItem => item.Modelo)
+                        </td>
+                        <td data-label="@Html.DisplayNameFor(model => model.Activo)">
+                            @Html.DisplayFor(modelItem => item.Activo)
+                        </td>
+                        <td data-label="Usuario">
+                            @Html.DisplayFor(modelItem => item.IdUsuarioNavigation.Nombre)
+                        </td>
+                        <td data-label="Acciones">
+                            <div class="action-group">
+                                <a asp-action="Edit" asp-route-id="@item.IdEquipo" class="action-button edit-button">Editar</a>
+                                <a asp-action="Details" asp-route-id="@item.IdEquipo" class="action-button details-button">Detalles</a>
+                                <a asp-action="Delete" asp-route-id="@item.IdEquipo" class="action-button delete-button">Eliminar</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

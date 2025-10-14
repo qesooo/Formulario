@@ -1,0 +1,211 @@
+﻿@model Formulario_soporte.Models.Equipo
+
+@{
+    ViewData["Title"] = "Registrar equipo";
+    // Definición de colores
+    var pastelYellow = "#fcf8f3";
+    var headerBlue = "#4a90e2";
+    var buttonYellow = "#f7b731";
+}
+
+<style>
+    /* 1. Estilos Globales y Fondo */
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Fondo principal: Amarillo pastel */
+    body {
+        background-color: @pastelYellow;
+        font-family: 'Poppins', sans-serif;
+        min-height: 100vh;
+        padding-top: 20px;
+    }
+
+    /* Navbar: Asegurar que la barra de navegación también sea amarillo pastel */
+    .navbar, .header, .navbar-nav, .container-fluid, .navbar-expand-sm, .navbar-light {
+        background-color: @pastelYellow !important;
+        border-bottom: none !important;
+        box-shadow: none !important;
+    }
+
+    /* 2. Contenedor Principal (La tarjeta blanca centrada) */
+    .form-container {
+        width: 100%;
+        max-width: 450px; /* Ancho consistente con el formulario de usuario */
+        background-color: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        /* Centramos el contenedor horizontalmente */
+        margin: 80px auto 40px auto;
+    }
+
+    /* 3. Títulos */
+    h1, hr {
+        display: none; /* Ocultamos los títulos y líneas originales */
+    }
+
+    .styled-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 5px;
+        text-align: center;
+    }
+
+    .form-subtitle {
+        font-size: 1rem;
+        font-weight: 400;
+        color: #666;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    /* 4. Estructura del Formulario */
+    .row, .col-md-6 {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    .control-label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+        color: #444;
+        font-size: 0.95rem;
+    }
+
+    /* 5. Campos de Entrada (Input/Select) */
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+        .form-control:focus {
+            border-color: @headerBlue;
+            outline: none;
+            box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
+        }
+
+    /* 6. Botones (Guardar y Volver) */
+    .button-group {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .btn-custom {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s, box-shadow 0.3s;
+        text-decoration: none;
+        text-align: center;
+    }
+
+    /* Botón Guardar (Azul) */
+    .btn-primary-custom {
+        background-color: @headerBlue;
+        color: white;
+    }
+
+        .btn-primary-custom:hover {
+            background-color: #357bd1;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+    /* Botón Volver a la lista (Amarillo) */
+    .btn-secondary-custom {
+        background-color: @buttonYellow;
+        color: #333;
+    }
+
+        .btn-secondary-custom:hover {
+            background-color: #e5a428;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+    /* Estilos para los mensajes de error */
+    .text-danger {
+        font-size: 0.85rem;
+        margin-top: 5px;
+    }
+</style>
+
+<div class="form-container">
+
+    <h2 class="styled-title">Registrar nuevo equipo</h2>
+    <p class="form-subtitle">Ingresa los detalles para registrar un nuevo equipo.</p>
+
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label asp-for="Tipo" class="control-label"></label>
+                    <input asp-for="Tipo" class="form-control" placeholder="Ej: Laptop, Impresora..." />
+                    <span asp-validation-for="Tipo" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Marca" class="control-label"></label>
+                    <input asp-for="Marca" class="form-control" placeholder="Ej: HP, Dell, Epson..." />
+                    <span asp-validation-for="Marca" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Modelo" class="control-label"></label>
+                    <input asp-for="Modelo" class="form-control" placeholder="Ej: ProBook 450 G8..." />
+                    <span asp-validation-for="Modelo" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Activo" class="control-label"></label>
+                    <input asp-for="Activo" class="form-control" placeholder="Código o número de activo..." />
+                    <span asp-validation-for="Activo" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="IdUsuario" class="control-label">Responsable</label>
+                    <select asp-for="IdUsuario" class="form-control" asp-items="ViewBag.IdUsuario">
+                        <option value="">-- Seleccione un responsable --</option>
+                    </select>
+                    <span asp-validation-for="IdUsuario" class="text-danger"></span>
+                </div>
+
+                <div class="button-group">
+                    <input type="submit" value="Registrar" class="btn btn-custom btn-primary-custom" />
+                    <a asp-action="Index" class="btn btn-custom btn-secondary-custom">Volver a la lista</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,190 @@
+﻿@model Formulario_soporte.Models.Equipo
+
+@{
+    ViewData["Title"] = "Detalles de Equipo";
+    // Definición de colores
+    var pastelYellow = "#fcf8f3";
+    var headerBlue = "#4a90e2";
+    var buttonYellow = "#f7b731";
+}
+
+<style>
+    /* 1. Estilos Globales y Fondo */
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Fondo principal: Amarillo pastel y Tipografía */
+    body {
+        background-color: @pastelYellow;
+        font-family: 'Poppins', sans-serif;
+        min-height: 100vh;
+        padding-top: 20px;
+    }
+
+    /* Ajuste para la Barra de Navegación (para aplicar el fondo amarillo pastel) */
+    .navbar, .navbar-light, .navbar-expand-sm {
+        background-color: @pastelYellow !important;
+        border-bottom: none !important;
+        box-shadow: none !important;
+    }
+
+    /* 2. Contenedor Principal (La tarjeta blanca) */
+    .details-container {
+        width: 100%;
+        max-width: 600px;
+        background-color: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        text-align: left;
+        margin: 80px auto 40px auto; /* Centrado vertical y horizontal */
+    }
+
+    /* 3. Títulos */
+    h1 {
+        display: none; /* Ocultar el h1 predeterminado */
+    }
+
+    h4 {
+        display: none; /* Ocultar el h4 predeterminado (Equipo) */
+    }
+
+    .styled-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 5px;
+        text-align: center;
+    }
+
+    .form-subtitle {
+        font-size: 1rem;
+        font-weight: 400;
+        color: #666;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    /* 4. Lista de Detalles (dl) */
+    .dl-horizontal {
+        margin-top: 20px;
+    }
+
+        .dl-horizontal dt {
+            font-weight: 600;
+            color: #444;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            padding: 8px 15px 8px 0;
+        }
+
+        .dl-horizontal dd {
+            font-weight: 400;
+            color: #666;
+            border-bottom: 1px solid #eee;
+            padding: 8px 0 8px 15px;
+            text-align: left;
+            word-break: break-all; /* Para manejar texto largo como la firma */
+        }
+
+        /* Ajuste de columnas para que se vean mejor */
+        .dl-horizontal dt.col-sm-4 {
+            width: 35%;
+            float: left; /* Usar float para que dt y dd queden en la misma fila */
+        }
+
+        .dl-horizontal dd.col-sm-8 {
+            width: 65%;
+            float: left;
+            clear: right;
+        }
+
+    .row {
+        clear: both; /* Limpiar flotadores después de cada par dt/dd */
+    }
+
+    /* 5. Botones de Acción */
+    .button-group {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 30px;
+        width: 100%;
+        clear: both; /* Asegura que los botones estén debajo de la lista */
+    }
+
+    .btn-custom {
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s, box-shadow 0.3s;
+        text-decoration: none;
+        text-align: center;
+        display: block;
+    }
+
+    /* Botón Editar (Azul) */
+    .btn-primary-custom {
+        background-color: @headerBlue;
+        color: white;
+    }
+
+        .btn-primary-custom:hover {
+            background-color: #357bd1;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+    /* Botón Volver a la lista (Amarillo) */
+    .btn-secondary-custom {
+        background-color: @buttonYellow;
+        color: #333;
+    }
+
+        .btn-secondary-custom:hover {
+            background-color: #e5a428;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+</style>
+
+<div class="details-container">
+
+    <h2 class="styled-title">Detalles de Equipo</h2>
+    <p class="form-subtitle">Información detallada del equipo.</p>
+
+    <hr style="display: block; border-color: #f0f0f0; margin: 25px 0;" />
+
+    <dl class="row dl-horizontal">
+
+        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Tipo)</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.Tipo)</dd>
+
+        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Marca)</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.Marca)</dd>
+
+        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Modelo)</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.Modelo)</dd>
+
+        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Activo)</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.Activo)</dd>
+
+        <dt class="col-sm-4">Responsable</dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.IdUsuarioNavigation.Nombre)
+        </dd>
+
+    </dl>
+
+    <div class="button-group">
+        <a asp-action="Edit" asp-route-id="@Model?.IdEquipo" class="btn-custom btn-primary-custom">Editar</a>
+        <a asp-action="Index" class="btn-custom btn-secondary-custom">Volver a la lista</a>
+    </div>
+
+</div>

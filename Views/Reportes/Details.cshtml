@@ -1,0 +1,306 @@
+﻿@model Formulario_soporte.Models.Reporte
+
+@{
+    ViewData["Title"] = "Detalles del Reporte";
+    // Definición de colores
+    var pastelYellow = "#fcf8f3";
+    var headerBlue = "#4a90e2";
+    var buttonYellow = "#f7b731";
+}
+
+<style>
+    /* 1. Estilos Globales y Fondo */
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Fondo principal: Amarillo pastel y Tipografía */
+    body {
+        background-color: @pastelYellow;
+        font-family: 'Poppins', sans-serif;
+        min-height: 100vh;
+        padding-top: 20px;
+    }
+
+    /* Navbar: Asegurar que la barra de navegación también sea amarillo pastel */
+    .navbar, .header, .navbar-nav, .container-fluid, .navbar-expand-sm, .navbar-light {
+        background-color: @pastelYellow !important;
+        border-bottom: none !important;
+        box-shadow: none !important;
+    }
+
+    /* 2. Contenedor Principal (La tarjeta blanca) */
+    .details-container {
+        width: 100%;
+        max-width: 800px; /* Un poco más ancho para la lista de detalles */
+        background-color: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        text-align: left;
+        margin: 80px auto 40px auto; /* Centrado vertical y horizontal */
+    }
+
+    /* 3. Títulos */
+    h1 {
+        display: none; /* Ocultar el h1 predeterminado */
+    }
+
+    h4 {
+        display: none; /* Ocultar el h4 predeterminado (Reporte) */
+    }
+
+    .styled-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 5px;
+        text-align: center;
+    }
+
+    .form-subtitle {
+        font-size: 1rem;
+        font-weight: 400;
+        color: #666;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    /* 4. Lista de Detalles (dl) */
+    .dl-horizontal {
+        margin-top: 20px;
+    }
+
+        .dl-horizontal dt {
+            font-weight: 600;
+            color: #444;
+            text-align: right;
+            border-bottom: 1px solid #eee;
+            padding: 8px 15px;
+        }
+
+        .dl-horizontal dd {
+            font-weight: 400;
+            color: #666;
+            border-bottom: 1px solid #eee;
+            padding: 8px 15px;
+            text-align: left;
+        }
+
+    /* Ajuste para mobile */
+    @@media (max-width: 768px) {
+        .dl-horizontal dt, .dl-horizontal dd {
+            width: 100%;
+            text-align: left;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .dl-horizontal dd {
+            margin-bottom: 15px;
+        }
+    }
+
+
+    /* 5. Botones de Acción */
+    .button-group {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 30px;
+        width: 100%;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .btn-custom {
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s, box-shadow 0.3s;
+        text-decoration: none;
+        text-align: center;
+        display: block; /* Asegura que ocupen todo el ancho dentro del grupo */
+    }
+
+    /* Botón Editar (Azul) */
+    .btn-primary-custom {
+        background-color: @headerBlue;
+        color: white;
+    }
+
+        .btn-primary-custom:hover {
+            background-color: #357bd1;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+    /* Botón Volver a la lista (Amarillo) */
+    .btn-secondary-custom {
+        background-color: @buttonYellow;
+        color: #333;
+    }
+
+        .btn-secondary-custom:hover {
+            background-color: #e5a428;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+    /* Estilo de la imagen de firma */
+    .signature-image {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        display: block; /* Para centrar si fuera necesario */
+        margin-top: 5px;
+    }
+
+</style>
+
+<div class="details-container">
+
+    <h2 class="styled-title">Detalles del Reporte</h2>
+    <p class="form-subtitle">Información completa sobre la incidencia y el trabajo realizado.</p>
+
+    <hr style="display: block; border-color: #f0f0f0; margin: 25px 0;" />
+
+    <dl class="row dl-horizontal">
+
+        <dt class="col-sm-4">Fecha de Reporte</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.FechaReporte)</dd>
+
+        <h4>Tareas de Mantenimiento Realizadas</h4>
+        <div class="row">
+            <div class="col-md-4">
+                <h5>Lógico</h5>
+                <ul class="list-group">
+                    @if (Model.Defragmentar)
+                    {
+                        <li class="list-group-item">Defragmentar</li>
+                    }
+                    @if (Model.WindowsConfiguracion)
+                    {
+                        <li class="list-group-item">Configuración de Windows</li>
+                    }
+                    @if (Model.ActualizacionDrivers)
+                    {
+                        <li class="list-group-item">Actualización de Drivers</li>
+                    }
+                </ul>
+            </div>
+
+            <div class="col-md-4">
+                <h5>Físico</h5>
+                <ul class="list-group">
+                    @if (Model.LimpiezaTotal)
+                    {
+                        <li class="list-group-item">Limpieza Total</li>
+                    }
+                    @if (Model.DiscoDuroFisico)
+                    {
+                        <li class="list-group-item">Revisión de Disco Duro</li>
+                    }
+                    @if (Model.TecladoFisico)
+                    {
+                        <li class="list-group-item">Revisión de Teclado</li>
+                    }
+                    @if (Model.MemoriaFisico)
+                    {
+                        <li class="list-group-item">Revisión de Memoria</li>
+                    }
+                    @if (Model.RedFisico)
+                    {
+                        <li class="list-group-item">Revisión de Red</li>
+                    }
+                    @if (Model.PantallaMonitorFisico)
+                    {
+                        <li class="list-group-item">Revisión de Pantalla/Monitor</li>
+                    }
+                </ul>
+            </div>
+
+            <div class="col-md-4">
+                <h5>Reemplazo</h5>
+                <ul class="list-group">
+                    @if (Model.DiscoDuroReemplazo)
+                    {
+                        <li class="list-group-item">Disco Duro</li>
+                    }
+                    @if (Model.TecladoReemplazo)
+                    {
+                        <li class="list-group-item">Teclado</li>
+                    }
+                    @if (Model.MemoriaReemplazo)
+                    {
+                        <li class="list-group-item">Memoria</li>
+                    }
+                    @if (Model.RedReemplazo)
+                    {
+                        <li class="list-group-item">Componente de Red</li>
+                    }
+                    @if (Model.PantallaMonitorReemplazo)
+                    {
+                        <li class="list-group-item">Pantalla/Monitor</li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+        <hr />
+
+        <dt class="col-sm-4">Descripción</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.Descripcion)</dd>
+
+        <dt class="col-sm-4">Trabajo Realizado</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.TrabajoRealizado)</dd>
+
+        <dt class="col-sm-4">Estado</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.Estado)</dd>
+
+        <dt class="col-sm-4">Equipo (Activo)</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.IdEquipoNavigation.Activo)</dd>
+
+        <dt class="col-sm-4">Sucursal</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.IdSucursalNavigation.Nombre)</dd>
+
+        <dt class="col-sm-4">Responsable (Solicitante)</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.IdUsuarioResponsableNavigation.Nombre)</dd>
+
+        <dt class="col-sm-4">Técnico a cargo</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.IdUsuarioTecnicoNavigation.Nombre)</dd>
+
+        <dt class="col-sm-4">Firma Digital</dt>
+        <dd class="col-sm-8">
+            @if (Model.Firma != null && Model.Firma.Length > 0)
+            {
+                // Convertir el byte array a Base64 para mostrarlo como imagen
+                string firmaBase64 = Convert.ToBase64String(Model.Firma);
+                <img src="data:image/png;base64,@firmaBase64" alt="Firma del Responsable" class="signature-image" style="max-width: 250px;" />
+            }
+            else
+            {
+                <span>No hay firma registrada.</span>
+            }
+        </dd>
+    </dl>
+
+    <div class="button-group">
+        <a asp-action="Edit" asp-route-id="@Model?.IdReporte" class="btn-custom btn-primary-custom">Editar</a>
+        <a asp-action="Index" class="btn-custom btn-secondary-custom">Volver a la lista</a>
+    </div>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
