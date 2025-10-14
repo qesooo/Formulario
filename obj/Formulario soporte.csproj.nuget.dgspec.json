@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\James Hamilton\\source\\repos\\Formulario soporte\\Formulario soporte\\Formulario soporte.csproj": {}
+    "C:\\Users\\ASUS\\Music\\Formulario  nuevo cope\\Formulario\\Formulario soporte.csproj": {}
   },
   "projects": {
-    "C:\\Users\\James Hamilton\\source\\repos\\Formulario soporte\\Formulario soporte\\Formulario soporte.csproj": {
+    "C:\\Users\\ASUS\\Music\\Formulario  nuevo cope\\Formulario\\Formulario soporte.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\James Hamilton\\source\\repos\\Formulario soporte\\Formulario soporte\\Formulario soporte.csproj",
+        "projectUniqueName": "C:\\Users\\ASUS\\Music\\Formulario  nuevo cope\\Formulario\\Formulario soporte.csproj",
         "projectName": "Formulario soporte",
-        "projectPath": "C:\\Users\\James Hamilton\\source\\repos\\Formulario soporte\\Formulario soporte\\Formulario soporte.csproj",
-        "packagesPath": "C:\\Users\\James Hamilton\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\James Hamilton\\source\\repos\\Formulario soporte\\Formulario soporte\\obj\\",
+        "projectPath": "C:\\Users\\ASUS\\Music\\Formulario  nuevo cope\\Formulario\\Formulario soporte.csproj",
+        "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ASUS\\Music\\Formulario  nuevo cope\\Formulario\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\James Hamilton\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -84,7 +84,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

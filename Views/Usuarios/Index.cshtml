@@ -1,15 +1,215 @@
 ﻿@model IEnumerable<Formulario_soporte.Models.Usuario>
 
 @{
-    ViewData["Title"] = "Index";
+    // Título en español
+    ViewData["Title"] = "Gestión de Usuarios";
 }
+<style>
+    /* ... (Estilos body y h1 se mantienen) ... */
 
-<h1>Index</h1>
+    /* CORRECCIÓN FINAL: Aplicar el fondo pastel al BODY */
+    body {
+        background-color: #fcf8f3; /* ¡Fondo amarillo pastel aplicado a toda la página! */
+        font-family: 'Poppins', sans-serif;
+        color: #333;
+        min-height: 100vh;
+        padding-top: 20px;
+    }
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+    /* === CORRECCIÓN PARA EL NAVBAR/ENCABEZADO === */
+    /* Estas clases son comunes en ASP.NET Core Layouts. Es probable que una de ellas funcione. */
+    .navbar, .header, .navbar-nav, .container-fluid, .navbar-expand-sm {
+        background-color: #fcf8f3 !important; /* Forzar el fondo pastel */
+    }
+
+    /* Si el navbar tiene una sombra o borde inferior, es buena práctica quitarlo */
+    .navbar {
+        border-bottom: none !important;
+        box-shadow: none !important;
+    }
+    /* Centrar el título de la página */
+    h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #333;
+    }
+
+    /* 2. Estilo del Botón "Registrar Usuario" / "Create New" */
+    /* Alineación del botón a la izquierda */
+    .create-button-container {
+        display: flex;
+        justify-content: flex-start; /* Alinea el contenido (el botón) a la izquierda */
+        width: 100%;
+        max-width: 800px; /* Ajustar al ancho del contenedor de tu tabla si es necesario */
+        margin: 0 auto 20px auto; /* Centrar el contenedor del botón y dar margen inferior */
+    }
+
+    .create-button {
+        display: inline-block;
+        background-color: #4a90e2; /* Azul */
+        color: white;
+        padding: 10px 15px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: 600;
+        transition: background-color 0.3s, box-shadow 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+        .create-button:hover {
+            background-color: #357bd1;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+    /* 3. Estilo de la Tabla Completa */
+    .styled-table {
+        width: 100%;
+        max-width: 100%; /* Ajustar al contenedor */
+        border-collapse: separate;
+        border-spacing: 0;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+        margin: 0 auto 40px auto; /* Centrar la tabla */
+    }
+
+        /* 4. Estilo del Encabezado (Azul Oscuro) */
+        .styled-table thead th {
+            background-color: #4a90e2;
+            color: white;
+            text-align: left;
+            padding: 15px 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* 5. Estilo de las Filas del Cuerpo - Alternancia de Colores */
+        .styled-table tbody td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            color: #444;
+            font-size: 0.95rem;
+        }
+
+        /* Fila 1 (ÍMPAR): Color Amarillo Pastel */
+        .styled-table tbody tr:nth-of-type(odd) td {
+            background-color: #fcf8f3; /* Amarillo Pastel */
+        }
+
+        /* Fila 2 (PAR): Color Blanco */
+        .styled-table tbody tr:nth-of-type(even) td {
+            background-color: white; /* Blanco */
+        }
+
+        /* Estilo al pasar el ratón (Hover) */
+        .styled-table tbody tr:hover td {
+            background-color: #f0f8ff; /* Azul muy claro al pasar el ratón */
+        }
+
+        /* Quitar el borde inferior de la última fila */
+        .styled-table tbody tr:last-of-type td {
+            border-bottom: none;
+        }
+
+    /* 6. Estilo de los Botones de Acción */
+    .action-button {
+        display: inline-block;
+        padding: 6px 10px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-right: 5px;
+        transition: opacity 0.2s;
+        color: white !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Colores específicos para cada acción */
+    .edit-button {
+        background-color: #38bdf8;
+    }
+
+    .details-button {
+        background-color: #4ade80;
+    }
+
+    .delete-button {
+        background-color: #f87171;
+    }
+
+
+    /* 7. Mobile-First (Responsividad) */
+    @@media (max-width: 768px) {
+        /* Asegurar que el contenedor del botón también se vea bien en móvil */
+        .create-button-container {
+            margin: 0 10px 20px 10px;
+        }
+        /* La responsividad de tabla en modo tarjeta se mantiene */
+        .styled-table {
+            border: 0;
+            box-shadow: none;
+        }
+
+            .styled-table thead {
+                display: none;
+            }
+
+            .styled-table tr {
+                display: block;
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                background-color: white !important; /* Forzar fondo blanco en tarjeta */
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            }
+
+            .styled-table td {
+                display: block;
+                text-align: right;
+                padding-left: 50% !important;
+                position: relative;
+                border-bottom: 1px solid #eee !important;
+                /* Quitar el color de fondo para que el color de la tarjeta se mantenga */
+                background-color: transparent !important;
+            }
+
+                .styled-table td:before {
+                    content: attr(data-label);
+                    position: absolute;
+                    left: 10px;
+                    width: 45%;
+                    padding-right: 10px;
+                    white-space: nowrap;
+                    font-weight: 600;
+                    text-align: left;
+                    color: #666;
+                }
+
+            .styled-table tbody tr td:last-child {
+                text-align: center;
+                border-bottom: none !important;
+                padding: 10px;
+            }
+    }
+
+</style>
+
+<h1>Gestión de Usuarios</h1>
+
+<div class="create-button-container">
+    <p>
+        <a asp-action="Create" class="create-button">Registrar Usuario</a>
+    </p>
+</div>
+
+<table class="styled-table">
     <thead>
         <tr>
             <th>
@@ -19,29 +219,30 @@
                 @Html.DisplayNameFor(model => model.Rol)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Password)
+                Contraseña
             </th>
-            <th></th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rol)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdUsuario">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdUsuario">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdUsuario">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td data-label="@Html.DisplayNameFor(model => model.Nombre)">
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td data-label="@Html.DisplayNameFor(model => model.Rol)">
+                    @Html.DisplayFor(modelItem => item.Rol)
+                </td>
+                <td data-label="Contraseña">
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>
+                <td data-label="Acciones">
+                    <a asp-action="Edit" asp-route-id="@item.IdUsuario" class="action-button edit-button">Editar</a>
+                    <a asp-action="Details" asp-route-id="@item.IdUsuario" class="action-button details-button">Detalles</a>
+                    <a asp-action="Delete" asp-route-id="@item.IdUsuario" class="action-button delete-button">Eliminar</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

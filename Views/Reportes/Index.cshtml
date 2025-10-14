@@ -1,110 +1,313 @@
 ﻿@model IEnumerable<Formulario_soporte.Models.Reporte>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Gestión de Reportes";
+    // Eliminamos la variable 'createYellow' no utilizada para evitar el error CSS0219.
+    var pastelYellow = "#fcf8f3";
+    var headerBlue = "#4a90e2";
 }
 
-<h1>Index</h1>
+<style>
+    /* 1. Estilos Globales y Fondo */
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaReporte)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MantenimientoLogico)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MantenimientoFisico)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MantenimientoReemplazo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descripcion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TrabajoRealizado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdEquipoNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdSucursalNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdUsuarioResponsableNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdUsuarioTecnicoNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Firma)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaReporte)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MantenimientoLogico)
-            </td>
-             <td>
-                @Html.DisplayFor(modelItem => item.MantenimientoFisico)
-             </td>
-             <td>
-                @Html.DisplayFor(modelItem => item.MantenimientoReemplazo)
-             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TrabajoRealizado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdEquipoNavigation.Activo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdSucursalNavigation.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdUsuarioResponsableNavigation.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdUsuarioTecnicoNavigation.Nombre)
-            </td>
-                <td>
-                    @if (item.Firma != null && item.Firma.Length > 0)
-                    {
-                        string imageBase64 = Convert.ToBase64String(item.Firma);
-                        string imageSrc = $"data:image/png;base64,{imageBase64}";
-                        <img src="@imageSrc" alt="Firma" style="max-width:120px; border:1px solid #ccc; border-radius:5px;" />
-                    }
-                    else
-                    {
-                        <span class="text-muted">Sin firma</span>
-                    }
-                </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdReporte">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdReporte">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdReporte">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        /* Fondo amarillo pastel y fuente */
+        background-color: @pastelYellow;
+        font-family: 'Poppins', sans-serif;
+        color: #333;
+    }
+
+    /* Navbar: Asegurar que la barra de navegación también sea amarillo pastel */
+    .navbar, .header, .navbar-nav, .container-fluid, .navbar-expand-sm, .navbar-light {
+        background-color: @pastelYellow !important;
+        border-bottom: none !important;
+        box-shadow: none !important;
+    }
+
+    /* Título principal */
+    h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #333;
+    }
+
+    /* Contenedor principal para centrar la tabla y el botón */
+    .report-container {
+        width: 100%;
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    /* 2. Estilo del Botón "Crear Nuevo" */
+    .create-button-container {
+        display: flex;
+        justify-content: flex-start;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .create-button {
+        display: inline-block;
+        background-color: @headerBlue;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: 600;
+        transition: background-color 0.3s, box-shadow 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+        .create-button:hover {
+            background-color: #357bd1;
+        }
+
+    /* 3. Estilo de la Tabla (Similar a Gestión de Usuarios) */
+    .styled-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 40px;
+    }
+
+        /* 4. Estilo del Encabezado (Azul Oscuro, Texto Blanco) */
+        .styled-table thead th {
+            background-color: @headerBlue;
+            color: white;
+            text-align: left;
+            padding: 15px 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: none;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* 5. Estilo de las Filas del Cuerpo - Alternancia de Colores */
+        .styled-table tbody td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            color: #444;
+            font-size: 0.85rem;
+            vertical-align: middle;
+        }
+
+        /* Fila Impar: Amarillo Pastel */
+        .styled-table tbody tr:nth-of-type(odd) td {
+            background-color: @pastelYellow;
+        }
+
+        /* Fila Par: Blanco */
+        .styled-table tbody tr:nth-of-type(even) td {
+            background-color: white;
+        }
+
+        /* Hover */
+        .styled-table tbody tr:hover td {
+            background-color: #f0f8ff;
+        }
+
+        /* Quitar el borde inferior de la última fila */
+        .styled-table tbody tr:last-of-type td {
+            border-bottom: none;
+        }
+
+    /* 6. Estilo de los Botones de Acción */
+    .action-button {
+        display: block;
+        width: 100%;
+        padding: 6px 10px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: white !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    /* Colores */
+    .edit-button {
+        background-color: #38bdf8;
+    }
+
+    .details-button {
+        background-color: #4ade80;
+    }
+
+    .delete-button {
+        background-color: #f87171;
+    }
+
+    /* 7. Estilo de la Firma */
+    .firma-img {
+        max-width: 80px !important;
+        height: auto;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        display: block;
+        margin: 0 auto;
+    }
+
+    /* 8. Mobile-First (Responsividad) */
+    @@media (max-width: 1024px) {
+        .styled-table {
+            border: 0;
+            box-shadow: none;
+        }
+
+            .styled-table thead {
+                display: none;
+            }
+
+            .styled-table tr {
+                display: block;
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                background-color: white;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            }
+
+            .styled-table td {
+                display: block;
+                text-align: right;
+                padding-left: 55% !important;
+                position: relative;
+                border-bottom: 1px solid #eee !important;
+                background-color: transparent !important;
+            }
+
+                .styled-table td:before {
+                    content: attr(data-label);
+                    position: absolute;
+                    left: 10px;
+                    width: 50%;
+                    padding-right: 10px;
+                    white-space: nowrap;
+                    font-weight: 600;
+                    text-align: left;
+                    color: #666;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+            .styled-table tbody tr td:last-child {
+                text-align: center;
+                border-bottom: none !important;
+                padding: 10px;
+            }
+
+        .action-button {
+            display: inline-block;
+            width: auto;
+            margin: 5px 5px 0 0;
+        }
+    }
+
+</style>
+
+<div class="report-container">
+
+    <h1>Gestión de Reportes</h1>
+
+    <div class="create-button-container">
+        <p>
+            <a asp-action="Create" class="create-button">Crear Nuevo Reporte</a>
+        </p>
+    </div>
+
+    <div class="table-responsive">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Fecha Reporte</th>
+                    <th>Mantenimiento Lógico</th>
+                    <th>Mantenimiento Físico</th>
+                    <th>Mantenimiento Reemplazo</th>
+                    <th>Descripción</th>
+                    <th>Trabajo Realizado</th>
+                    <th>Estado</th>
+                    <th>Equipo (Activo)</th>
+                    <th>Empresa</th>
+                    <th>Responsable</th>
+                    <th>Técnico</th>
+                    <th>Firma</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td data-label="Fecha Reporte">
+                            @Html.DisplayFor(modelItem => item.FechaReporte)
+                        </td>
+                        <td data-label="Mant. Lógico">
+                            @Html.DisplayFor(modelItem => item.MantenimientoLogico)
+                        </td>
+                        <td data-label="Mant. Físico">
+                            @Html.DisplayFor(modelItem => item.MantenimientoFisico)
+                        </td>
+                        <td data-label="Mant. Reemplazo">
+                            @Html.DisplayFor(modelItem => item.MantenimientoReemplazo)
+                        </td>
+                        <td data-label="Descripción">
+                            @Html.DisplayFor(modelItem => item.Descripcion)
+                        </td>
+                        <td data-label="Trabajo Realizado">
+                            @Html.DisplayFor(modelItem => item.TrabajoRealizado)
+                        </td>
+                        <td data-label="Estado">
+                            @Html.DisplayFor(modelItem => item.Estado)
+                        </td>
+
+                        <td data-label="Equipo (Activo)">
+                            @item.IdEquipoNavigation?.Activo
+                        </td>
+                        <td data-label="Sucursal">
+                            @item.IdSucursalNavigation?.Nombre
+                        </td>
+                        <td data-label="Responsable">
+                            @item.IdUsuarioResponsableNavigation?.Nombre
+                        </td>
+                        <td data-label="Técnico">
+                            @item.IdUsuarioTecnicoNavigation?.Nombre
+                        </td>
+
+                        <td data-label="Firma">
+                            @if (item.Firma != null && item.Firma.Length > 0)
+                            {
+                                string imageBase64 = Convert.ToBase64String(item.Firma);
+                                string imageSrc = $"data:image/png;base64,{imageBase64}";
+                                <img src="@imageSrc" alt="Firma" class="firma-img" />
+                            }
+                            else
+                            {
+                                <span class="text-muted">Sin firma</span>
+                            }
+                        </td>
+                        <td data-label="Acciones">
+                            <a asp-action="Edit" asp-route-id="@item.IdReporte" class="action-button edit-button">Editar</a>
+                            <a asp-action="Details" asp-route-id="@item.IdReporte" class="action-button details-button">Detalles</a>
+                            <a asp-action="Delete" asp-route-id="@item.IdReporte" class="action-button delete-button">Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

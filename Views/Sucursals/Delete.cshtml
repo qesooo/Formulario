@@ -1,33 +1,187 @@
 ﻿@model Formulario_soporte.Models.Sucursal
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Eliminar Sucursal";
+    // Definición de colores
+    var pastelYellow = "#fcf8f3";
+    var buttonYellow = "#f7b731";
+    var deleteRed = "#e74c3c";
 }
 
-<h1>Delete</h1>
+<style>
+    /* 1. Estilos Globales y Fondo */
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Sucursal</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Empresa)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Empresa)
-        </dd>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Fondo principal: Amarillo pastel y Tipografía */
+    body {
+        background-color: @pastelYellow;
+        font-family: 'Poppins', sans-serif;
+        min-height: 100vh;
+        padding-top: 20px;
+    }
+
+    /* Navbar: Asegurar que la barra de navegación también sea amarillo pastel */
+    .navbar, .header, .navbar-nav, .container-fluid, .navbar-expand-sm, .navbar-light {
+        background-color: @pastelYellow !important;
+        border-bottom: none !important;
+        box-shadow: none !important;
+    }
+
+    /* 2. Contenedor Principal (La tarjeta blanca) */
+    .delete-container {
+        width: 100%;
+        max-width: 500px;
+        background-color: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        text-align: left;
+        margin: 80px auto 40px auto; /* Centrado vertical y horizontal */
+    }
+
+    /* 3. Títulos y Confirmación */
+    h1 {
+        display: none; /* Ocultar el h1 predeterminado */
+    }
+
+    h3 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    h4 {
+        display: none; /* Ocultar el h4 predeterminado (Sucursal) */
+    }
+
+    .styled-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: @deleteRed; /* Título en rojo para la acción de eliminar */
+        margin-bottom: 5px;
+        text-align: center;
+    }
+
+    .form-subtitle {
+        font-size: 1rem;
+        font-weight: 400;
+        color: #666;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    /* 4. Lista de Detalles (dl) */
+    .dl-horizontal {
+        margin-top: 20px;
+    }
+
+        .dl-horizontal dt {
+            font-weight: 600;
+            color: #444;
+            text-align: right;
+            border-bottom: 1px solid #eee;
+            padding: 8px 15px;
+        }
+
+        .dl-horizontal dd {
+            font-weight: 400;
+            color: #666;
+            border-bottom: 1px solid #eee;
+            padding: 8px 15px;
+            text-align: left;
+        }
+
+    /* Ajuste para mobile */
+    @@media (max-width: 768px) {
+        .dl-horizontal dt, .dl-horizontal dd {
+            width: 100%;
+            text-align: left;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .dl-horizontal dd {
+            margin-bottom: 15px;
+        }
+    }
+
+    /* 5. Botones de Acción */
+    .button-group {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 30px;
+        width: 100%;
+    }
+
+    .btn-custom {
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s, box-shadow 0.3s;
+        text-decoration: none;
+        text-align: center;
+        display: block;
+    }
+
+    /* Botón Eliminar (Rojo) */
+    .btn-delete-custom {
+        background-color: @deleteRed;
+        color: white;
+    }
+
+        .btn-delete-custom:hover {
+            background-color: #c0392b;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+    /* Botón Volver a la lista (Amarillo) */
+    .btn-secondary-custom {
+        background-color: @buttonYellow;
+        color: #333;
+    }
+
+        .btn-secondary-custom:hover {
+            background-color: #e5a428;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+</style>
+
+<div class="delete-container">
+
+    <h2 class="styled-title">Eliminar Sucursal</h2>
+    <p class="form-subtitle">Confirme la eliminación del registro. Esta acción es irreversible.</p>
+
+    <h3>¿Está seguro que desea eliminar esta sucursal?</h3>
+
+    <hr style="display: block; border-color: #f0f0f0; margin: 25px 0;" />
+
+    <dl class="row dl-horizontal">
+
+        <dt class="col-sm-4">Nombre</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.Nombre)</dd>
+
+        <dt class="col-sm-4">Empresa</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.Empresa)</dd>
+
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="IdSucursal" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <div class="button-group">
+            <input type="submit" value="Eliminar" class="btn-custom btn-delete-custom" />
+            <a asp-action="Index" class="btn-custom btn-secondary-custom">Volver a la lista</a>
+        </div>
     </form>
 </div>

@@ -17,141 +17,141 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Formulario_soporte
 build_property.RootNamespace = Formulario_soporte
-build_property.ProjectDir = C:\Users\James Hamilton\source\repos\Formulario soporte\Formulario soporte\
+build_property.ProjectDir = C:\Users\ASUS\Music\Formulario  nuevo cope\Formulario\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\James Hamilton\source\repos\Formulario soporte\Formulario soporte
+build_property.MSBuildProjectDirectory = C:\Users\ASUS\Music\Formulario  nuevo cope\Formulario
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Equipoes/Create.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Equipoes/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXF1aXBvZXNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Equipoes/Delete.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Equipoes/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXF1aXBvZXNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Equipoes/Details.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Equipoes/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXF1aXBvZXNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Equipoes/Edit.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Equipoes/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXF1aXBvZXNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Equipoes/Index.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Equipoes/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXF1aXBvZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Home/AccessDenied.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Home/AccessDenied.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBY2Nlc3NEZW5pZWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Home/AdminMenu.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Home/AdminMenu.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBZG1pbk1lbnUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Home/Index.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Home/Privacy.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Home/SolicitanteMenu.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Home/SolicitanteMenu.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTb2xpY2l0YW50ZU1lbnUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Home/TecnicoMenu.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Home/TecnicoMenu.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxUZWNuaWNvTWVudS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Login/Index.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Login/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Reportes/Create.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Reportes/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0ZXNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Reportes/Delete.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Reportes/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0ZXNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Reportes/Details.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Reportes/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0ZXNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Reportes/Edit.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Reportes/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0ZXNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Reportes/Index.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Reportes/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0ZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Shared/Error.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Sucursals/Create.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Sucursals/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VjdXJzYWxzXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Sucursals/Delete.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Sucursals/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VjdXJzYWxzXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Sucursals/Details.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Sucursals/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VjdXJzYWxzXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Sucursals/Edit.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Sucursals/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VjdXJzYWxzXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Sucursals/Index.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Sucursals/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VjdXJzYWxzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Usuarios/Create.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Usuarios/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Usuarios/Delete.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Usuarios/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Usuarios/Details.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Usuarios/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Usuarios/Edit.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Usuarios/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Usuarios/Index.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Usuarios/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/_ViewImports.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/_ViewStart.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/James Hamilton/source/repos/Formulario soporte/Formulario soporte/Views/Shared/_Layout.cshtml]
+[C:/Users/ASUS/Music/Formulario  nuevo cope/Formulario/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-s0ox7w0aix

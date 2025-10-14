@@ -1,54 +1,180 @@
 ﻿@model Formulario_soporte.Models.Equipo
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Detalles de Equipo";
+    // Definición de colores
+    var pastelYellow = "#fcf8f3"; // Usando un pastel más general que #FFF9C4 para consistencia con ejemplos previos
+    var headerBlue = "#4a90e2";
+    var buttonYellow = "#f7b731";
 }
 
-<h1>Edit</h1>
+<style>
+    /* 1. Estilos Globales y Fondo */
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-<h4>Equipo</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="IdEquipo" />
-            <div class="form-group">
-                <label asp-for="Tipo" class="control-label"></label>
-                <input asp-for="Tipo" class="form-control" />
-                <span asp-validation-for="Tipo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Marca" class="control-label"></label>
-                <input asp-for="Marca" class="form-control" />
-                <span asp-validation-for="Marca" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Modelo" class="control-label"></label>
-                <input asp-for="Modelo" class="form-control" />
-                <span asp-validation-for="Modelo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Activo" class="control-label"></label>
-                <input asp-for="Activo" class="form-control" />
-                <span asp-validation-for="Activo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdUsuario" class="control-label"></label>
-                <select asp-for="IdUsuario" class="form-control" asp-items="ViewBag.IdUsuario"></select>
-                <span asp-validation-for="IdUsuario" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Fondo principal: Amarillo pastel y Tipografía */
+    body {
+        background-color: @pastelYellow;
+        font-family: 'Poppins', sans-serif;
+        min-height: 100vh;
+        padding-top: 20px;
+    }
+
+    /* **Ajuste para la Barra de Navegación (donde está la 'casita' de home)** */
+    /* Se asume que la barra de navegación usa la clase 'navbar' o similar */
+    .navbar, .navbar-light, .navbar-expand-sm, .header-container {
+        background-color: @pastelYellow !important; /* Aplica el color pastel a la barra */
+        border-bottom: none !important;
+        box-shadow: none !important;
+    }
+
+    /* 2. Contenedor Principal (La tarjeta blanca) */
+    .details-container {
+        width: 100%;
+        max-width: 600px; /* Ancho consistente con el formulario de edición */
+        background-color: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        text-align: left;
+        margin: 80px auto 40px auto; /* Centrado vertical y horizontal */
+    }
+
+    /* 3. Títulos */
+    h1 {
+        display: none; /* Ocultar el h1 predeterminado */
+    }
+
+    h4 {
+        display: none; /* Ocultar el h4 predeterminado (Equipo) */
+    }
+
+    .styled-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 5px;
+        text-align: center;
+    }
+
+    .form-subtitle {
+        font-size: 1rem;
+        font-weight: 400;
+        color: #666;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    /* 4. Lista de Detalles (dl) */
+    .dl-horizontal {
+        margin-top: 20px;
+    }
+
+        .dl-horizontal dt {
+            font-weight: 600;
+            color: #444;
+            text-align: left; /* Alineación a la izquierda para mejor lectura */
+            border-bottom: 1px solid #eee;
+            padding: 8px 15px 8px 0;
+        }
+
+        .dl-horizontal dd {
+            font-weight: 400;
+            color: #666;
+            border-bottom: 1px solid #eee;
+            padding: 8px 0 8px 15px;
+            text-align: left;
+        }
+
+        /* Ajuste de columnas para que se vean mejor */
+        .dl-horizontal dt.col-sm-4 {
+            width: 35%; /* La etiqueta ocupa un poco menos */
+        }
+
+        .dl-horizontal dd.col-sm-8 {
+            width: 65%; /* El valor ocupa un poco más */
+        }
+
+    /* 5. Botones de Acción */
+    .button-group {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 30px;
+        width: 100%;
+    }
+
+    .btn-custom {
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s, box-shadow 0.3s;
+        text-decoration: none;
+        text-align: center;
+        display: block;
+    }
+
+    /* Botón Editar (Azul) */
+    .btn-primary-custom {
+        background-color: @headerBlue;
+        color: white;
+    }
+
+        .btn-primary-custom:hover {
+            background-color: #357bd1;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+    /* Botón Volver a la lista (Amarillo) */
+    .btn-secondary-custom {
+        background-color: @buttonYellow;
+        color: #333;
+    }
+
+        .btn-secondary-custom:hover {
+            background-color: #e5a428;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+</style>
+
+<div class="details-container">
+
+    <h2 class="styled-title">Detalles de Equipo</h2>
+    <p class="form-subtitle">Información detallada del equipo.</p>
+
+    <hr style="display: block; border-color: #f0f0f0; margin: 25px 0;" />
+
+    <dl class="row dl-horizontal">
+
+        <dt class="col-sm-4">Tipo</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.Tipo)</dd>
+
+        <dt class="col-sm-4">Marca</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.Marca)</dd>
+
+        <dt class="col-sm-4">Modelo</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.Modelo)</dd>
+
+        <dt class="col-sm-4">Activo</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.Activo)</dd>
+
+        <dt class="col-sm-4">Responsable</dt>
+        <dd class="col-sm-8">@Html.DisplayFor(model => model.IdUsuarioNavigation.Nombre)</dd>
+
+    </dl>
+
+    <div class="button-group">
+        <a asp-action="Edit" asp-route-id="@Model?.IdEquipo" class="btn-custom btn-primary-custom">Editar</a>
+        <a asp-action="Index" class="btn-custom btn-secondary-custom">Volver a la lista</a>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

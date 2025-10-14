@@ -2,120 +2,278 @@
 
 @{
     ViewData["Title"] = "Editar Reporte";
+    // Definición de colores
+    var pastelYellow = "#fcf8f3";
+    var headerBlue = "#4a90e2";
+    var buttonYellow = "#f7b731";
 }
 
-<h1>Editar Reporte</h1>
-<hr />
-<div class="row">
-    <div class="col-md-6">
-        <form asp-action="Edit" method="post">
-            @Html.AntiForgeryToken()
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="IdReporte" />
+<style>
+    /* 1. Estilos Globales y Fondo */
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-            <div class="form-group">
-                <label asp-for="IdUsuarioTecnico" class="control-label"></label>
-                <select asp-for="IdUsuarioTecnico" class="form-control" asp-items="ViewBag.IdUsuarioTecnico"></select>
-                <span asp-validation-for="IdUsuarioTecnico" class="text-danger"></span>
-            </div>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
 
-            <div class="form-group">
-                <label asp-for="IdEquipo" class="control-label"></label>
-                <select asp-for="IdEquipo" class="form-control" asp-items="ViewBag.IdEquipo"></select>
-                <span asp-validation-for="IdEquipo" class="text-danger"></span>
-            </div>
+    /* Fondo principal: Amarillo pastel y Tipografía */
+    body {
+        background-color: @pastelYellow;
+        font-family: 'Poppins', sans-serif;
+        min-height: 100vh;
+        padding-top: 20px;
+    }
 
-            <div class="form-group">
-                <label asp-for="IdSucursal" class="control-label"></label>
-                <select asp-for="IdSucursal" class="form-control" asp-items="ViewBag.IdSucursal"></select>
-                <span asp-validation-for="IdSucursal" class="text-danger"></span>
-            </div>
+    /* Navbar: Asegurar que la barra de navegación también sea amarillo pastel */
+    .navbar, .header, .navbar-nav, .container-fluid, .navbar-expand-sm, .navbar-light {
+        background-color: @pastelYellow !important;
+        border-bottom: none !important;
+        box-shadow: none !important;
+    }
 
-            <div class="form-group">
-                <label asp-for="FechaReporte" class="control-label"></label>
-                <input asp-for="FechaReporte" class="form-control" />
-                <span asp-validation-for="FechaReporte" class="text-danger"></span>
-            </div>
+    /* 2. Contenedor Principal (La tarjeta blanca) */
+    .form-container {
+        width: 100%;
+        max-width: 700px; /* Ancho máximo consistente con el formulario de Create */
+        background-color: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        margin: 80px auto 40px auto; /* Centrado vertical y horizontal */
+    }
 
-            <div class="form-group">
-                <label asp-for="MantenimientoLogico" class="control-label"></label>
-                <select asp-for="MantenimientoLogico" class="form-control">
-                    <option value="">(Ninguno)</option>
-                    <option value="Defragmentar">Defragmentar</option>
-                    <option value="Windows configuracion">Windows configuración</option>
-                    <option value="Actualizacion drivers">Actualización de drivers</option>
-                </select>
-                <span asp-validation-for="MantenimientoLogico" class="text-danger"></span>
-            </div>
+    /* 3. Títulos */
+    h1 {
+        display: none; /* Ocultar el h1 predeterminado */
+    }
 
-            <div class="form-group">
-                <label asp-for="MantenimientoFisico" class="control-label"></label>
-                <select asp-for="MantenimientoFisico" class="form-control">
-                    <option value="">(Ninguno)</option>
-                    <option value="Limpieza total">Limpieza total</option>
-                    <option value="Disco duro">Disco duro</option>
-                    <option value="Teclado">Teclado</option>
-                    <option value="Memoria">Memoria</option>
-                    <option value="Red">Red</option>
-                    <option value="Pantalla/Monitor">Pantalla/Monitor</option>
-                </select>
-                <span asp-validation-for="MantenimientoFisico" class="text-danger"></span>
-            </div>
+    .styled-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 5px;
+        text-align: center;
+    }
 
-            <div class="form-group">
-                <label asp-for="MantenimientoReemplazo" class="control-label"></label>
-                <select asp-for="MantenimientoReemplazo" class="form-control">
-                    <option value="">(Ninguno)</option>
-                    <option value="Disco duro">Disco duro</option>
-                    <option value="Teclado">Teclado</option>
-                    <option value="Memoria">Memoria</option>
-                    <option value="Red">Red</option>
-                    <option value="Pantalla/Monitor">Pantalla/Monitor</option>
-                </select>
-                <span asp-validation-for="MantenimientoReemplazo" class="text-danger"></span>
-            </div>
+    .form-subtitle {
+        font-size: 1rem;
+        font-weight: 400;
+        color: #666;
+        margin-bottom: 25px;
+        text-align: center;
+    }
 
-            <div class="form-group">
-                <label asp-for="Descripcion" class="control-label"></label>
-                <input asp-for="Descripcion" class="form-control" />
-                <span asp-validation-for="Descripcion" class="text-danger"></span>
-            </div>
+    hr {
+        display: none;
+    }
 
-            <div class="form-group">
-                <label asp-for="TrabajoRealizado" class="control-label"></label>
-                <input asp-for="TrabajoRealizado" class="form-control" />
-                <span asp-validation-for="TrabajoRealizado" class="text-danger"></span>
-            </div>
+    /* 4. Grupos de Formulario y Etiquetas */
+    .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+    }
 
-            <div class="form-group">
-                <label asp-for="Estado" class="control-label"></label>
-                <input asp-for="Estado" class="form-control" />
-                <span asp-validation-for="Estado" class="text-danger"></span>
-            </div>
+    .control-label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+        color: #444;
+        font-size: 0.95rem;
+    }
 
-            <div class="form-group">
-                <label asp-for="IdUsuarioResponsable" class="control-label"></label>
-                <select asp-for="IdUsuarioResponsable" class="form-control" asp-items="ViewBag.IdUsuarioResponsable"></select>
-                <span asp-validation-for="IdUsuarioResponsable" class="text-danger"></span>
-            </div>
+    /* 5. Campos de Entrada (Input/Select) */
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
 
-            @* ✅ Mostrar firma actual si existe *@
-            @if (Model.Firma != null && Model.Firma.Length > 0)
-            {
-                string firmaBase64 = Convert.ToBase64String(Model.Firma);
+        .form-control:focus {
+            border-color: @headerBlue;
+            outline: none;
+            box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
+        }
+
+    /* 6. Botones (Guardar y Volver) */
+    .button-group {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .btn-custom {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s, box-shadow 0.3s;
+        text-decoration: none;
+        text-align: center;
+    }
+
+    /* Botón Guardar (Azul) */
+    .btn-primary-custom {
+        background-color: @headerBlue;
+        color: white;
+    }
+
+        .btn-primary-custom:hover {
+            background-color: #357bd1;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+    /* Botón Volver a la lista (Amarillo) */
+    .btn-secondary-custom {
+        background-color: @buttonYellow;
+        color: #333;
+    }
+
+        .btn-secondary-custom:hover {
+            background-color: #e5a428;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+    /* Correcciones para estructura de Bootstrap */
+    .row, .col-md-6 {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+    }
+</style>
+
+<div class="form-container">
+
+    <h2 class="styled-title">Editar Reporte</h2>
+    <p class="form-subtitle">Modifica los detalles de la incidencia documentada.</p>
+
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Edit" method="post">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="IdReporte" />
+                <input type="hidden" asp-for="Firma" /> @* Campo oculto para mantener la firma existente si no se cambia *@
+
                 <div class="form-group">
-                    <label>Firma actual guardada:</label><br />
-                    <img src="data:image/png;base64,@firmaBase64" alt="Firma guardada"
-                         style="max-width:300px; border:1px solid #ccc; border-radius:5px;" />
+                    <label for="IdUsuarioTecnico" class="control-label">Técnico a cargo</label>
+                    <select asp-for="IdUsuarioTecnico" class="form-control" asp-items="ViewBag.IdUsuarioTecnico"></select>
+                    <span asp-validation-for="IdUsuarioTecnico" class="text-danger"></span>
                 </div>
-            }
+
+                <div class="form-group">
+                    <label for="IdEquipo" class="control-label">Equipo</label>
+                    <select asp-for="IdEquipo" class="form-control" asp-items="ViewBag.IdEquipo"></select>
+                    <span asp-validation-for="IdEquipo" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="IdSucursal" class="control-label">Sucursal</label>
+                    <select asp-for="IdSucursal" class="form-control" asp-items="ViewBag.IdSucursal"></select>
+                    <span asp-validation-for="IdSucursal" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="FechaReporte" class="control-label">Fecha de Reporte</label>
+                    <input asp-for="FechaReporte" type="date" class="form-control" />
+                    <span asp-validation-for="FechaReporte" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="MantenimientoLogico" class="control-label">Mantenimiento Lógico</label>
+                    <select asp-for="MantenimientoLogico" class="form-control">
+                        <option value="">(Ninguno)</option>
+                        <option value="Defragmentar">Defragmentar</option>
+                        <option value="Windows configuracion">Windows configuración</option>
+                        <option value="Actualizacion drivers">Actualización de drivers</option>
+                    </select>
+                    <span asp-validation-for="MantenimientoLogico" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="MantenimientoFisico" class="control-label">Mantenimiento Físico</label>
+                    <select asp-for="MantenimientoFisico" class="form-control">
+                        <option value="">(Ninguno)</option>
+                        <option value="Limpieza total">Limpieza total</option>
+                        <option value="Disco duro">Disco duro</option>
+                        <option value="Teclado">Teclado</option>
+                        <option value="Memoria">Memoria</option>
+                        <option value="Red">Red</option>
+                        <option value="Pantalla/Monitor">Pantalla/Monitor</option>
+                    </select>
+                    <span asp-validation-for="MantenimientoFisico" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="MantenimientoReemplazo" class="control-label">Mantenimiento Reemplazo</label>
+                    <select asp-for="MantenimientoReemplazo" class="form-control">
+                        <option value="">(Ninguno)</option>
+                        <option value="Disco duro">Disco duro</option>
+                        <option value="Teclado">Teclado</option>
+                        <option value="Memoria">Memoria</option>
+                        <option value="Red">Red</option>
+                        <option value="Pantalla/Monitor">Pantalla/Monitor</option>
+                    </select>
+                    <span asp-validation-for="MantenimientoReemplazo" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Descripcion" class="control-label"></label>
+                    <input asp-for="Descripcion" class="form-control" />
+                    <span asp-validation-for="Descripcion" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="TrabajoRealizado" class="control-label">Trabajo Realizado</label>
+                    <input asp-for="TrabajoRealizado" class="form-control" />
+                    <span asp-validation-for="TrabajoRealizado" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Estado" class="control-label"></label>
+                    <input asp-for="Estado" class="form-control" />
+                    <span asp-validation-for="Estado" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="IdUsuarioResponsable" class="control-label">Responsable (Solicitante)</label>
+                    <select asp-for="IdUsuarioResponsable" class="form-control" asp-items="ViewBag.IdUsuarioResponsable"></select>
+                    <span asp-validation-for="IdUsuarioResponsable" class="text-danger"></span>
+                </div>
+
+                @if (Model.Firma != null && Model.Firma.Length > 0)
+                {
+                    string firmaBase64 = Convert.ToBase64String(Model.Firma);
+                    <div class="form-group">
+                        <label class="control-label">Firma Digital del Responsable (Actual)</label><br />
+                        <div style="border:1px solid #ccc; border-radius:8px; padding:10px; max-width:300px; margin: 0 auto; margin-top: 5px;">
+                            <img src="data:image/png;base64,@firmaBase64" alt="Firma guardada"
+                                 style="max-width:100%; height:auto; display:block;" />
+                        </div>
+                    </div>
+                }
 
 
-            <div class="form-group mt-3">
-                <input type="submit" value="Guardar" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-secondary">Volver</a>
-            </div>
-        </form>
+                <div class="button-group">
+                    <input type="submit" value="Guardar" class="btn btn-custom btn-primary-custom" />
+                    <a asp-action="Index" class="btn btn-custom btn-secondary-custom">Volver a la lista</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

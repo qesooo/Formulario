@@ -1,36 +1,210 @@
 ﻿@model Formulario_soporte.Models.Usuario
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles de Usuario";
+    // Definición de colores
+    var pastelYellow = "#fcf8f3";
+    var headerBlue = "#4a90e2";
+    var buttonYellow = "#f7b731";
 }
 
-<h1>Details</h1>
+<style>
+    /* 1. Estilos Globales y Fondo */
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-<div>
-    <h4>Usuario</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Rol)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Rol)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.IdUsuario">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Fondo principal: Amarillo pastel */
+    body {
+        background-color: @pastelYellow;
+        font-family: 'Poppins', sans-serif;
+        min-height: 100vh;
+        padding-top: 20px;
+    }
+
+    /* Navbar: Asegurar que la barra de navegación también sea amarillo pastel */
+    .navbar, .header, .navbar-nav, .container-fluid, .navbar-expand-sm, .navbar-light {
+        background-color: @pastelYellow !important;
+        border-bottom: none !important;
+        box-shadow: none !important;
+    }
+
+    /* 2. Contenedor Principal (La tarjeta blanca centrada) */
+    .details-container {
+        width: 100%;
+        max-width: 450px;
+        background-color: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        /* Centramos el contenedor horizontalmente */
+        margin: 80px auto 40px auto;
+    }
+
+    /* 3. Títulos */
+    h1, h4, hr {
+        display: none; /* Ocultamos los títulos y líneas originales */
+    }
+
+    .styled-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 5px;
+        text-align: center;
+    }
+
+    .form-subtitle {
+        font-size: 1rem;
+        font-weight: 400;
+        color: #666;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    /* 4. Lista de Definición (Datos) */
+    .dl-horizontal {
+        text-align: left;
+        margin-top: 20px;
+    }
+
+        .dl-horizontal dt {
+            font-weight: 600;
+            color: #444;
+            font-size: 0.95rem;
+            padding-right: 15px;
+            /* Estilo para mobile (display block) */
+            text-align: left;
+            width: 100%;
+            margin-top: 15px;
+            border-bottom: 1px dashed #eee;
+            padding-bottom: 5px;
+        }
+
+        .dl-horizontal dd {
+            margin-left: 0;
+            font-size: 1rem;
+            color: #333;
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+
+        /* Estilos de Bootstrap grid (dl-horizontal) */
+        .dl-horizontal .col-sm-2 {
+            width: 100%; /* Mobile First: Ocupa todo el ancho */
+            float: none;
+        }
+
+        .dl-horizontal .col-sm-10 {
+            width: 100%; /* Mobile First: Ocupa todo el ancho */
+            float: none;
+            padding-left: 0;
+        }
+
+    /* Desktop/Tablet: Volver a la disposición horizontal */
+    @@media (min-width: 576px) {
+        .dl-horizontal dt {
+            width: 30%;
+            float: left;
+            text-align: right;
+            border-bottom: none;
+            padding-right: 15px;
+            margin-top: 0;
+            padding-bottom: 0;
+        }
+
+        .dl-horizontal dd {
+            width: 65%;
+            float: left;
+            margin-left: 5%;
+            margin-bottom: 0;
+            margin-top: 0;
+        }
+    }
+
+    /* 5. Botones (Editar y Volver) */
+    .button-group {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .btn-custom {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s, box-shadow 0.3s;
+        text-decoration: none;
+        text-align: center;
+    }
+
+    /* Botón Editar (Azul) */
+    .btn-primary-custom {
+        background-color: @headerBlue;
+        color: white;
+    }
+
+        .btn-primary-custom:hover {
+            background-color: #357bd1;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+    /* Botón Volver a la lista (Amarillo) */
+    .btn-secondary-custom {
+        background-color: @buttonYellow;
+        color: #333;
+    }
+
+        .btn-secondary-custom:hover {
+            background-color: #e5a428;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+</style>
+
+<div class="details-container">
+
+    <h2 class="styled-title">Detalles de Usuario</h2>
+    <p class="form-subtitle">Información completa del registro de usuario.</p>
+
+    <div>
+        <dl class="row dl-horizontal">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Nombre)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Nombre)
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Rol)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Rol)
+            </dd>
+
+            <dt class="col-sm-2">
+                Contraseña
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Password)
+            </dd>
+        </dl>
+    </div>
+
+    <div class="button-group">
+        <a asp-action="Edit" asp-route-id="@Model?.IdUsuario" class="btn btn-custom btn-primary-custom">Editar</a>
+
+        <a asp-action="Index" class="btn btn-custom btn-secondary-custom">Volver a la lista</a>
+    </div>
+
 </div>
